@@ -88,5 +88,9 @@ code { font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono",
 .foot { margin-top: 56px; padding: 28px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
 .small { font-size: 13px; }
 .notfound { padding: 80px 0; }
+.crumbs { padding-top: 16px; font-size: 14px; color: var(--muted); }
+.crumbs a { color: var(--muted); }
+nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+.card h3 a { color: inherit; }
 
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

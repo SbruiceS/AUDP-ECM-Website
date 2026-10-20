@@ -21,6 +21,19 @@ It intentionally contains no secrets and no internal architecture of the private
 | `scripts/content_guard.py` | pre-publish guard (see below) |
 | `.github/workflows/pages.yml` | CI (guard) and CD (GitHub Pages deploy from `main`) |
 
+## Pages and search
+
+| Page | Targets searches for |
+|------|----------------------|
+| `index.html` | AUDP-ECM, agricultural telemetry error correction |
+| `about.html` | Agriculture Service of Product Farm (ASPF) |
+| `research.html` | agriculture research and innovation |
+| `sbruice-singh.html` | Sbruice Singh |
+
+Every page carries a canonical URL, Open Graph / Twitter card metadata and a schema.org
+JSON-LD graph (`Organization`, `Person`, `WebSite`, `SoftwareApplication`, breadcrumbs).
+`sitemap.xml` lists all pages; `og-image.png` (1200×630) and `logo.png` (512×512) are the share image and logo.
+
 ## Content guard
 
 Every push and pull request runs `python3 scripts/content_guard.py site`, which fails on:
@@ -28,7 +41,9 @@ Every push and pull request runs `python3 scripts/content_guard.py site`, which 
 - secret-like strings (tokens, private keys, key material, secret names);
 - names of private-core internals or links to the private repository;
 - broken internal links and insecure `http://` links;
-- `<script>`, inline styles or event handlers, and pages without a Content-Security-Policy.
+- `<script>` (other than inline schema.org JSON-LD data), inline styles or event handlers, and pages without a Content-Security-Policy;
+- missing or malformed SEO: title / description length, canonical URL, Open Graph and Twitter tags,
+  exactly one `<h1>`, image `alt` text, valid JSON-LD, and sitemap coverage.
 
 Deployment only happens after the guard passes.
 

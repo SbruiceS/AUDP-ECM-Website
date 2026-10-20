@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://sbruices.github.io/AUDP-ECM-Website/sitemap.xml

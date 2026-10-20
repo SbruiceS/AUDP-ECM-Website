@@ -4,23 +4,185 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
-  <meta name="referrer" content="no-referrer">
-  <title>AUDP-ECM — Error Correction for Telemetry Links</title>
-  <meta name="description" content="AUDP-ECM is an error-correction library for agricultural sensors and telemetry: Reed–Solomon, BCH, CRC-16 and burst-resilient framing, with Python and D bindings.">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>AUDP-ECM — Error Correction for Agricultural Telemetry | ASPF</title>
+  <meta name="description" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): error correction for reliable data from agricultural sensors and farm telemetry, with Python and D bindings.">
+  <meta name="author" content="Sbruice Singh">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b7285">
+  <link rel="canonical" href="https://sbruices.github.io/AUDP-ECM-Website/">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="logo.png" type="image/png" sizes="512x512">
+  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AUDP-ECM — Agriculture Service of Product Farm">
+  <meta property="og:title" content="AUDP-ECM — Error Correction for Agricultural Telemetry | ASPF">
+  <meta property="og:description" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): error correction for reliable data from agricultural sensors and farm telemetry, with Python and D bindings.">
+  <meta property="og:url" content="https://sbruices.github.io/AUDP-ECM-Website/">
+  <meta property="og:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): reliable data from every field sensor">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Sbruice1">
+  <meta name="twitter:title" content="AUDP-ECM — Error Correction for Agricultural Telemetry | ASPF">
+  <meta name="twitter:description" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): error correction for reliable data from agricultural sensors and farm telemetry, with Python and D bindings.">
+  <meta name="twitter:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "inLanguage": "en",
+   "name": "AUDP-ECM — Agriculture Service of Product Farm (ASPF)",
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf",
+   "name": "Agriculture Service of Product Farm",
+   "alternateName": [
+    "ASPF",
+    "Agriculture Service of Product Farm (ASPF)"
+   ],
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/about.html",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/logo.png",
+    "width": 512,
+    "height": 512
+   },
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png",
+   "email": "sbruicesingh@haclon.in",
+   "description": "Agriculture Service of Product Farm (ASPF) is an agriculture research and innovation organisation building dependable data technology for farms: the AUDP device protocol family and the AUDP-ECM error-correction engine for agricultural sensors and telemetry.",
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "precision agriculture",
+    "agritech",
+    "agricultural sensors",
+    "farm telemetry",
+    "error-correcting codes",
+    "data reliability"
+   ],
+   "member": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "research collaboration and licensing",
+    "email": "sbruicesingh@haclon.in"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person",
+   "name": "Sbruice Singh",
+   "jobTitle": "Researcher",
+   "description": "Sbruice Singh is a researcher and the developer of AUDP-ECM at Agriculture Service of Product Farm (ASPF), working on dependable data for agricultural sensors and telemetry.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png",
+   "worksFor": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "affiliation": {
+    "@type": "Organization",
+    "name": "High Association Of Science & Technology (HACLON)",
+    "url": "https://www.haclon.in"
+   },
+   "sameAs": [
+    "https://github.com/SbruiceS",
+    "https://x.com/Sbruice1"
+   ],
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "error-correcting codes",
+    "Reed–Solomon codes",
+    "finite fields",
+    "agricultural telemetry",
+    "Rust",
+    "Python",
+    "D"
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#audp-ecm",
+   "name": "AUDP-ECM",
+   "alternateName": "AUDP Error Correction Mathematics Engine",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Linux, Windows, macOS",
+   "description": "Error-correction engine for agricultural sensors and telemetry: Reed–Solomon, BCH, CRC-16 and burst-resilient framing, with Python and D bindings.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "author": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "license": "https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/LICENSE"
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#webpage",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "name": "AUDP-ECM — Error Correction for Agricultural Telemetry | ASPF",
+   "description": "AUDP-ECM by Agriculture Service of Product Farm (ASPF): error correction for reliable data from agricultural sensors and farm telemetry, with Python and D bindings.",
+   "isPartOf": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website"
+   },
+   "inLanguage": "en",
+   "dateModified": "2026-10-20",
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   },
+   "breadcrumb": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#breadcrumb"
+   },
+   "mainEntity": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#audp-ecm"
+   },
+   "about": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/"
+    }
+   ]
+  }
+ ]
+}
+  </script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="top">
     <div class="wrap bar">
-      <a class="brand" href="./"><img src="favicon.svg" alt="" width="28" height="28"> AUDP-ECM</a>
+      <a class="brand" href="index.html"><img src="favicon.svg" alt="AUDP-ECM logo" width="28" height="28"> AUDP-ECM</a>
       <nav aria-label="Main">
-        <a href="#what">Overview</a>
-        <a href="#capabilities">Capabilities</a>
-        <a href="#bindings">Bindings</a>
-        <a href="#quality">Quality</a>
-        <a href="#security">Security</a>
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="about.html">About ASPF</a>
+        <a href="research.html">Research &amp; Innovation</a>
+        <a href="sbruice-singh.html">Sbruice Singh</a>
+        <a href="index.html#bindings">Bindings</a>
       </nav>
     </div>
   </header>
@@ -28,14 +190,16 @@
   <main id="main">
     <section class="hero">
       <div class="wrap">
-        <p class="eyebrow">AUDP Error Correction Mathematics Engine</p>
-        <h1>Reliable payloads over unreliable links.</h1>
+        <p class="eyebrow">Agriculture Service of Product Farm (ASPF) · AUDP Error Correction Mathematics Engine</p>
+        <h1>Reliable data from every field sensor.</h1>
         <p class="lead">AUDP-ECM turns noisy or incomplete sensor and telemetry frames into exact
           payloads using classical algebraic coding: Reed–Solomon, BCH, CRC-16 and burst-resilient
-          interleaving.</p>
+          interleaving. It is developed by <a href="about.html">Agriculture Service of Product Farm (ASPF)</a>
+          as part of its <a href="research.html">agriculture research and innovation</a> work.</p>
         <p class="cta">
           <a class="btn" href="https://github.com/SbruiceS/AUDP-ECM-Python">Python binding</a>
           <a class="btn ghost" href="https://github.com/SbruiceS/AUDP-ECM-D">D binding</a>
+          <a class="btn ghost" href="about.html">About ASPF</a>
         </p>
       </div>
     </section>
@@ -45,7 +209,7 @@
       <p>Field devices in agriculture send small messages over radio, long cables and shared
         channels. Interference flips symbols, bursts wipe out runs of bytes, and weak signals
         leave values unknown. AUDP-ECM is the software layer that detects and repairs this
-        damage before the data is used.</p>
+        damage before the data reaches farm management, research analysis or automated control.</p>
       <div class="grid three">
         <div class="card"><h3>Detect</h3><p>CRC-16 and syndromes reveal that a frame was corrupted.</p></div>
         <div class="card"><h3>Correct</h3><p>Reed–Solomon and BCH repair a bounded number of wrong symbols or bits.</p></div>
@@ -128,9 +292,12 @@ assert(codec.recover(codec.protect(msg)) == msg);</code></pre>
 
   <footer class="foot">
     <div class="wrap">
+      <p><a href="about.html">Agriculture Service of Product Farm (ASPF)</a> ·
+        <a href="research.html">Agriculture research &amp; innovation</a> ·
+        <a href="sbruice-singh.html">Sbruice Singh</a></p>
       <p>© 2026 Sbruice Singh · Agriculture Service of Product Farm (ASPF). All rights reserved.</p>
       <p class="small">AUDP-ECM is proprietary software of ASPF and is not open source. Any use requires a
-        written licence agreement with ASPF — licensing enquiries:
+        written licence agreement with ASPF — licensing and research enquiries:
         <a href="mailto:sbruicesingh@haclon.in">sbruicesingh@haclon.in</a>.</p>
       <p class="small">This site is informational. It sets no cookies and loads no third-party resources.</p>
     </div>
