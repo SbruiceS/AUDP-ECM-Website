@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>AUDP-ECM — Error Correction for Telemetry Links</title>
+  <meta name="description" content="AUDP-ECM is an error-correction library for agricultural sensors and telemetry: Reed–Solomon, BCH, CRC-16 and burst-resilient framing, with Python and D bindings.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="./"><img src="favicon.svg" alt="" width="28" height="28"> AUDP-ECM</a>
+      <nav aria-label="Main">
+        <a href="#what">Overview</a>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#bindings">Bindings</a>
+        <a href="#quality">Quality</a>
+        <a href="#security">Security</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">AUDP Error Correction Mathematics Engine</p>
+        <h1>Reliable payloads over unreliable links.</h1>
+        <p class="lead">AUDP-ECM turns noisy or incomplete sensor and telemetry frames into exact
+          payloads using classical algebraic coding: Reed–Solomon, BCH, CRC-16 and burst-resilient
+          interleaving.</p>
+        <p class="cta">
+          <a class="btn" href="https://github.com/SbruiceS/AUDP-ECM-Python">Python binding</a>
+          <a class="btn ghost" href="https://github.com/SbruiceS/AUDP-ECM-D">D binding</a>
+        </p>
+      </div>
+    </section>
+
+    <section id="what" class="wrap">
+      <h2>What it is</h2>
+      <p>Field devices in agriculture send small messages over radio, long cables and shared
+        channels. Interference flips symbols, bursts wipe out runs of bytes, and weak signals
+        leave values unknown. AUDP-ECM is the software layer that detects and repairs this
+        damage before the data is used.</p>
+      <div class="grid three">
+        <div class="card"><h3>Detect</h3><p>CRC-16 and syndromes reveal that a frame was corrupted.</p></div>
+        <div class="card"><h3>Correct</h3><p>Reed–Solomon and BCH repair a bounded number of wrong symbols or bits.</p></div>
+        <div class="card"><h3>Recover</h3><p>Known-bad symbols are treated as erasures, which cost half as much redundancy as unknown errors.</p></div>
+      </div>
+      <p class="note"><strong>Not cryptography.</strong> Error correction handles channel noise. It does not
+        authenticate data or resist a deliberate attacker; use a MAC or AEAD for that.</p>
+    </section>
+
+    <section id="capabilities" class="wrap">
+      <h2>Capabilities</h2>
+      <table>
+        <thead><tr><th>Feature</th><th>What you get</th></tr></thead>
+        <tbody>
+          <tr><td>Reed–Solomon over GF(256)</td><td>Corrects <em>e</em> unknown errors and <em>s</em> erasures whenever 2e + s ≤ n − k; two independent decoders</td></tr>
+          <tr><td>Burst-resilient framing</td><td>Exact-length payload back; any contiguous burst up to <em>depth × t</em> symbols corrected</td></tr>
+          <tr><td>Binary BCH</td><td>Bit-level correction for bit-oriented links</td></tr>
+          <tr><td>CRC-16/CCITT-FALSE</td><td>Residual-error detection after decoding</td></tr>
+          <tr><td>Soft information</td><td>Low-reliability symbols become erasures, bounded to the code's budget</td></tr>
+          <tr><td>Channel models</td><td>Seeded symbol-error, burst and erasure channels for simulation</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="bindings" class="wrap">
+      <h2>Bindings</h2>
+      <div class="grid two">
+        <article class="card">
+          <h3>Python</h3>
+          <p>CPython ≥ 3.10 · Linux, Windows, macOS · no runtime dependencies.</p>
+<pre><code>import audp_ecm as ecm
+
+rs = ecm.ReedSolomon(31, 23)        # corrects 4 errors
+cw = rs.encode(bytes(23))
+rx = bytearray(cw); rx[3] ^= 0xFF
+assert rs.decode(rx).data == bytes(23)
+
+codec = ecm.BurstCodec.for_burst(31, 23, 64, 16)
+tx = codec.protect(b"node=17;temp=21.7")
+assert codec.recover(tx) == b"node=17;temp=21.7"</code></pre>
+          <p><a href="https://github.com/SbruiceS/AUDP-ECM-Python">Repository &amp; documentation →</a></p>
+        </article>
+        <article class="card">
+          <h3>D</h3>
+          <p>DMD or LDC · <code>@safe</code> API · RAII-managed resources.</p>
+<pre><code>import audp_ecm;
+
+auto rs = ReedSolomon(31, 23);
+auto cw = rs.encode(new ubyte[23]);
+cw[0] ^= 0xFF;
+assert(rs.decode(cw).correctedSymbols == 1);
+
+auto msg = cast(immutable(ubyte)[]) "node=17;temp=21.7";
+auto codec = BurstCodec(31, 23, 4);
+assert(codec.recover(codec.protect(msg)) == msg);</code></pre>
+          <p><a href="https://github.com/SbruiceS/AUDP-ECM-D">Repository &amp; documentation →</a></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="quality" class="wrap">
+      <h2>Engineering quality</h2>
+      <ul class="checks">
+        <li>Memory-safe by construction: no unsafe code in the bindings; the D API is <code>@safe</code>.</li>
+        <li>Invalid input is rejected with typed errors — never a crash, never silent corruption.</li>
+        <li>Results are verified before they are returned; burst frames carry a CRC as a second check.</li>
+        <li>Known-answer, differential, property-based and adversarial tests run on Linux, Windows and macOS.</li>
+        <li>Dependencies are audited continuously; releases ship checksums and signed build provenance.</li>
+      </ul>
+    </section>
+
+    <section id="security" class="wrap">
+      <h2>Security &amp; contact</h2>
+      <p>Found a vulnerability? Please report it privately through GitHub's
+        <em>Report a vulnerability</em> button on the affected repository, or by email to
+        <a href="mailto:sbruicesingh@haclon.in">sbruicesingh@haclon.in</a>. Do not open a public issue.
+        See also <a href=".well-known/security.txt">security.txt</a>.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p>© 2026 Sbruice Singh · Agriculture Service of Product Farm (ASPF) ·
+        Bindings licensed Apache-2.0 OR MIT.</p>
+      <p class="small">This site is informational. It sets no cookies and loads no third-party resources.</p>
+    </div>
+  </footer>
+</body>
+</html>

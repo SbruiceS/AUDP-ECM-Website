@@ -1,0 +1,7 @@
+Contact: mailto:sbruicesingh@haclon.in
+Contact: https://github.com/SbruiceS/AUDP-ECM-Python/security/advisories/new
+Contact: https://github.com/SbruiceS/AUDP-ECM-D/security/advisories/new
+Expires: 2027-10-20T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://sbruices.github.io/AUDP-ECM-Website/.well-known/security.txt
+Policy: https://github.com/SbruiceS/AUDP-ECM-Python/security/policy
