@@ -1,0 +1,23 @@
+{
+  "name": "AUDP-ECM \u2014 Agriculture Service of Product Farm",
+  "short_name": "AUDP-ECM",
+  "description": "Error correction for reliable agricultural sensor and telemetry data.",
+  "start_url": "/AUDP-ECM-Website/",
+  "scope": "/AUDP-ECM-Website/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0b7285",
+  "icons": [
+    {
+      "src": "/AUDP-ECM-Website/assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/AUDP-ECM-Website/assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

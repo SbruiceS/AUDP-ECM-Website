@@ -29,8 +29,14 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.13"
-      - name: Check published content
+      - name: Pages match the generator (no hand-edited drift)
+        run: |
+          python3 scripts/build_site.py site
+          git diff --exit-code -- site || { echo "::error::site/ differs from scripts/build_site.py output; rebuild and commit"; exit 1; }
+      - name: Check published content (secrets, internals, CSP, JS, SEO)
         run: python3 scripts/content_guard.py site
+      - name: Test the in-browser Reed–Solomon demo codec
+        run: node scripts/test_demo.mjs
       - name: Upload site artifact
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v5

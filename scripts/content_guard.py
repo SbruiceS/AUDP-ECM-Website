@@ -40,7 +40,23 @@ INTERNAL_PATTERNS = {
     "deploy key mention": r"(?i)deploy[- ]key",
 }
 
-TEXT_SUFFIXES = {".html", ".css", ".txt", ".svg", ".xml", ".json", ".md", ".js"}
+TEXT_SUFFIXES = {".html", ".css", ".txt", ".svg", ".xml", ".json", ".md", ".js", ".webmanifest"}
+
+# First-party JavaScript must stay free of injection sinks and network access.
+JS_FORBIDDEN = {
+    "eval": r"\beval\s*\(",
+    "Function constructor": r"\bnew\s+Function\b",
+    "innerHTML/outerHTML": r"\b(inner|outer)HTML\b",
+    "insertAdjacentHTML": r"\binsertAdjacentHTML\b",
+    "document.write": r"\bdocument\.write",
+    "network: fetch": r"\bfetch\s*\(",
+    "network: XMLHttpRequest": r"\bXMLHttpRequest\b",
+    "network: WebSocket/EventSource/beacon": r"\b(WebSocket|EventSource|sendBeacon)\b",
+    "external URL": r"(?<![\w/])(https?:)?//[\w.-]+\.[a-z]{2,}",
+    "string timer": r"\bset(Timeout|Interval)\s*\(\s*['\"`]",
+}
+CSP_REQUIRED = ["default-src 'none'", "script-src 'self'", "base-uri 'none'", "form-action 'none'"]
+CSP_FORBIDDEN = ["'unsafe-inline'", "'unsafe-eval'", "*", "http:", "data:", "https:"]
 BASE_URL = "https://sbruices.github.io/AUDP-ECM-Website/"
 
 
@@ -60,11 +76,14 @@ class PageCheck(HTMLParser):
     def handle_starttag(self, tag, attrs):
         a = dict(attrs)
         if tag == "script":
-            if (a.get("type") or "").lower() == "application/ld+json" and "src" not in a:
+            src = a.get("src")
+            if (a.get("type") or "").lower() == "application/ld+json" and src is None:
                 self._in = "jsonld"
                 self.jsonld.append("")
+            elif src and src.endswith(".js") and not re.match(r"^(https?:)?//", src):
+                self._in = "extscript"   # same-origin file; must have no inline body
             else:
-                self.problems.append("<script> is not allowed (only inline application/ld+json data)")
+                self.problems.append("<script> must be a same-origin .js file or inline JSON-LD data")
         if tag == "title":
             self._in = "title"
         if tag == "h1":
@@ -84,6 +103,16 @@ class PageCheck(HTMLParser):
                 self.problems.append(f"inline event handler {name} on <{tag}>")
         if tag == "meta" and (a.get("http-equiv") or "").lower() == "content-security-policy":
             self.has_csp = True
+            csp = a.get("content") or ""
+            for need in CSP_REQUIRED:
+                if need not in csp:
+                    self.problems.append(f"CSP missing {need!r}")
+            for bad in CSP_FORBIDDEN:
+                if bad in csp:
+                    self.problems.append(f"CSP must not contain {bad!r}")
+        for cand in (a.get("srcset") or "").split(","):
+            if cand.strip():
+                self.links.append(cand.strip().split()[0])
         for attr in ("href", "src"):
             if a.get(attr) and not (tag == "link" and (a.get("rel") or "").lower() == "canonical"):
                 self.links.append(a[attr])
@@ -93,6 +122,8 @@ class PageCheck(HTMLParser):
             self._in = None
 
     def handle_data(self, data):
+        if self._in == "extscript" and data.strip():
+            self.problems.append("external <script> must not have an inline body")
         if self._in == "title":
             self.title += data
         elif self._in == "jsonld":
@@ -159,6 +190,12 @@ def main(root: Path) -> int:
             for m in re.finditer(pat, text):
                 line = text.count("\n", 0, m.start()) + 1
                 errors.append(f"{rel}:{line}: {label}: {m.group(0)[:40]!r}")
+
+        if path.suffix.lower() == ".js":
+            for label, pat in JS_FORBIDDEN.items():
+                for m in re.finditer(pat, text):
+                    line = text.count(chr(10), 0, m.start()) + 1
+                    errors.append(f"{rel}:{line}: forbidden in first-party JS: {label}: {m.group(0)[:30]!r}")
 
         if path.suffix.lower() == ".html":
             pc = PageCheck()
