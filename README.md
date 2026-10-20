@@ -3,7 +3,7 @@
 [![Website](https://github.com/SbruiceS/AUDP-ECM-Website/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/SbruiceS/AUDP-ECM-Website/actions/workflows/pages.yml)
 [![Site](https://img.shields.io/badge/site-sbruices.github.io%2FAUDP--ECM--Website-0b7285)](https://sbruices.github.io/AUDP-ECM-Website/)
 [![No JavaScript](https://img.shields.io/badge/JavaScript-none-success)](#security-posture)
-[![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![License](https://img.shields.io/badge/license-proprietary%20(ASPF)-lightgrey)](LICENSE)
 
 Public, **informational** website for AUDP-ECM:
 **https://sbruices.github.io/AUDP-ECM-Website/**
@@ -45,4 +45,5 @@ python3 scripts/content_guard.py site
 python3 -m http.server -d site 8000      # then open http://localhost:8000
 ```
 
-© 2026 Sbruice Singh / Agriculture Service of Product Farm (ASPF).
+© 2026 Sbruice Singh / Agriculture Service of Product Farm (ASPF). All rights reserved.
+Proprietary — see [LICENSE](LICENSE). Not open source.
