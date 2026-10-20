@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
   <meta name="referrer" content="strict-origin-when-cross-origin">
   <title>AUDP-ECM — Error Correction for Agricultural Telemetry | ASPF</title>
   <meta name="description" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): error correction for reliable data from agricultural sensors and farm telemetry, with Python and D bindings.">
@@ -11,9 +11,11 @@
   <meta name="robots" content="index, follow, max-image-preview:large">
   <meta name="theme-color" content="#0b7285">
   <link rel="canonical" href="https://sbruices.github.io/AUDP-ECM-Website/">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="logo.png" type="image/png" sizes="512x512">
-  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
   <link rel="sitemap" type="application/xml" href="sitemap.xml">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="AUDP-ECM — Agriculture Service of Product Farm">
@@ -31,6 +33,7 @@
   <meta name="twitter:description" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): error correction for reliable data from agricultural sensors and farm telemetry, with Python and D bindings.">
   <meta name="twitter:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
   <link rel="stylesheet" href="style.css">
+  <script src="assets/app.js" defer></script>
   <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -56,11 +59,14 @@
    "url": "https://sbruices.github.io/AUDP-ECM-Website/about.html",
    "logo": {
     "@type": "ImageObject",
-    "url": "https://sbruices.github.io/AUDP-ECM-Website/logo.png",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/assets/icon-512.png",
     "width": 512,
     "height": 512
    },
-   "image": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png",
+   "image": [
+    "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+    "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   ],
    "email": "sbruicesingh@haclon.in",
    "description": "Agriculture Service of Product Farm (ASPF) is an agriculture research and innovation organisation building dependable data technology for farms: the AUDP device protocol family and the AUDP-ECM error-correction engine for agricultural sensors and telemetry.",
    "knowsAbout": [
@@ -129,7 +135,10 @@
    "publisher": {
     "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
    },
-   "license": "https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/LICENSE"
+   "license": "https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/LICENSE",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+   "softwareVersion": "0.2.0",
+   "downloadUrl": "https://github.com/SbruiceS/AUDP-ECM-Python/releases"
   },
   {
    "@type": "WebPage",
@@ -176,35 +185,96 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="top">
     <div class="wrap bar">
-      <a class="brand" href="index.html"><img src="favicon.svg" alt="AUDP-ECM logo" width="28" height="28"> AUDP-ECM</a>
-      <nav aria-label="Main">
+      <a class="brand" href="index.html" aria-label="AUDP-ECM home">
+        <picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+      </a>
+      <div class="bar-actions">
+        <button id="theme-toggle" class="icon-btn needs-js" type="button" aria-label="Change theme">
+          <span class="i-sun" aria-hidden="true"></span><span class="i-moon" aria-hidden="true"></span>
+        </button>
+        <button id="nav-toggle" class="icon-btn menu needs-js" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="site-nav" aria-label="Main">
         <a href="index.html" aria-current="page">Home</a>
+        <a href="index.html#demo">Live demo</a>
         <a href="about.html">About ASPF</a>
         <a href="research.html">Research &amp; Innovation</a>
         <a href="sbruice-singh.html">Sbruice Singh</a>
-        <a href="index.html#bindings">Bindings</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
-    <section class="hero">
+    <section class="hero hero-home">
       <div class="wrap">
+        <div class="hero-logo"><picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-1200.png" alt="AUDP-ECM — AUDP Error Correction Mathematics Engine logo" width="1200" height="173" class="hero-img" fetchpriority="high">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM — AUDP Error Correction Mathematics Engine logo" width="640" height="92" class="hero-img">
+        </picture></div>
         <p class="eyebrow">Agriculture Service of Product Farm (ASPF) · AUDP Error Correction Mathematics Engine</p>
-        <h1>Reliable data from every field sensor.</h1>
+        <h1>Reliable data from <span class="grad">every field sensor.</span></h1>
         <p class="lead">AUDP-ECM turns noisy or incomplete sensor and telemetry frames into exact
           payloads using classical algebraic coding: Reed–Solomon, BCH, CRC-16 and burst-resilient
           interleaving. It is developed by <a href="about.html">Agriculture Service of Product Farm (ASPF)</a>
           as part of its <a href="research.html">agriculture research and innovation</a> work.</p>
         <p class="cta">
-          <a class="btn" href="https://github.com/SbruiceS/AUDP-ECM-Python">Python binding</a>
+          <a class="btn" href="#demo">Try the live demo</a>
+          <a class="btn ghost" href="https://github.com/SbruiceS/AUDP-ECM-Python">Python binding</a>
           <a class="btn ghost" href="https://github.com/SbruiceS/AUDP-ECM-D">D binding</a>
-          <a class="btn ghost" href="about.html">About ASPF</a>
         </p>
       </div>
     </section>
 
-    <section id="what" class="wrap">
+    <section class="wrap stats reveal" aria-label="Key facts">
+      <div class="stat"><strong>2e + s ≤ n − k</strong><span>errors and erasures corrected</span></div>
+      <div class="stat"><strong>2</strong><span>language bindings: Python &amp; D</span></div>
+      <div class="stat"><strong>4</strong><span>wheel platforms incl. ARM64</span></div>
+      <div class="stat"><strong>0</strong><span>unsafe code in the bindings</span></div>
+    </section>
+
+    <section id="demo" class="wrap demo reveal">
+      <h2>Live demo: watch errors get corrected</h2>
+      <p>This runs entirely in your browser — nothing is sent anywhere. Type a sensor message, choose how much
+        parity to add, then damage the transmitted symbols and see Reed–Solomon repair them.</p>
+      <noscript><p class="note">The live demo needs JavaScript. Everything else on this site works without it.</p></noscript>
+      <div id="demo-app" class="demo-app" hidden>
+        <div class="demo-controls">
+          <label class="field"><span>Sensor message</span>
+            <input id="demo-msg" type="text" maxlength="48" value="node=17;soil=0.42;temp=21.7" spellcheck="false" autocomplete="off">
+          </label>
+          <label class="field"><span>Parity symbols: <output id="demo-parity-out" for="demo-parity">8</output>
+            → corrects up to <output id="demo-t">4</output> errors</span>
+            <input id="demo-parity" type="range" min="2" max="32" step="2" value="8">
+          </label>
+        </div>
+        <div class="demo-actions">
+          <button class="btn small" id="demo-one" type="button">Corrupt 1 symbol</button>
+          <button class="btn small" id="demo-noise" type="button">Add random noise</button>
+          <button class="btn small" id="demo-burst" type="button">Burst of t symbols</button>
+          <button class="btn small ghost" id="demo-reset" type="button">Reset channel</button>
+        </div>
+        <p class="legend"><span class="sym parity">pp</span> parity <span class="sym data">dd</span> data
+          <span class="sym bad">xx</span> corrupted <span class="sym bad fixed">ok</span> repaired — click any symbol to toggle damage</p>
+        <div id="demo-grid" class="demo-grid" aria-label="Transmitted symbols (hex)"></div>
+        <p id="demo-status" class="demo-status" role="status" aria-live="polite"></p>
+        <p class="demo-out">Decoded payload: <code id="demo-decoded"></code></p>
+      </div>
+    </section>
+
+    <section id="what" class="wrap reveal">
       <h2>What it is</h2>
       <p>Field devices in agriculture send small messages over radio, long cables and shared
         channels. Interference flips symbols, bursts wipe out runs of bytes, and weak signals
@@ -219,9 +289,9 @@
         authenticate data or resist a deliberate attacker; use a MAC or AEAD for that.</p>
     </section>
 
-    <section id="capabilities" class="wrap">
+    <section id="capabilities" class="wrap reveal">
       <h2>Capabilities</h2>
-      <table>
+      <div class="table-scroll"><table>
         <thead><tr><th>Feature</th><th>What you get</th></tr></thead>
         <tbody>
           <tr><td>Reed–Solomon over GF(256)</td><td>Corrects <em>e</em> unknown errors and <em>s</em> erasures whenever 2e + s ≤ n − k; two independent decoders</td></tr>
@@ -231,10 +301,10 @@
           <tr><td>Soft information</td><td>Low-reliability symbols become erasures, bounded to the code's budget</td></tr>
           <tr><td>Channel models</td><td>Seeded symbol-error, burst and erasure channels for simulation</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </section>
 
-    <section id="bindings" class="wrap">
+    <section id="bindings" class="wrap reveal">
       <h2>Bindings</h2>
       <div class="grid two">
         <article class="card">
@@ -270,7 +340,7 @@ assert(codec.recover(codec.protect(msg)) == msg);</code></pre>
       </div>
     </section>
 
-    <section id="quality" class="wrap">
+    <section id="quality" class="wrap reveal">
       <h2>Engineering quality</h2>
       <ul class="checks">
         <li>Memory-safe by construction: no unsafe code in the bindings; the D API is <code>@safe</code>.</li>
@@ -281,7 +351,7 @@ assert(codec.recover(codec.protect(msg)) == msg);</code></pre>
       </ul>
     </section>
 
-    <section id="security" class="wrap">
+    <section id="security" class="wrap reveal">
       <h2>Security &amp; contact</h2>
       <p>Found a vulnerability? Please report it privately through GitHub's
         <em>Report a vulnerability</em> button on the affected repository, or by email to
@@ -292,6 +362,14 @@ assert(codec.recover(codec.protect(msg)) == msg);</code></pre>
 
   <footer class="foot">
     <div class="wrap">
+      <p class="foot-logo"><picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture></p>
       <p><a href="about.html">Agriculture Service of Product Farm (ASPF)</a> ·
         <a href="research.html">Agriculture research &amp; innovation</a> ·
         <a href="sbruice-singh.html">Sbruice Singh</a></p>

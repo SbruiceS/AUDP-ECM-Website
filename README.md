@@ -1,8 +1,10 @@
+<p align="center"><img src="site/assets/logo-1200.png" alt="AUDP-ECM logo" width="560"></p>
+
 # AUDP-ECM website
 
 [![Website](https://github.com/SbruiceS/AUDP-ECM-Website/actions/workflows/pages.yml/badge.svg?branch=main)](https://github.com/SbruiceS/AUDP-ECM-Website/actions/workflows/pages.yml)
 [![Site](https://img.shields.io/badge/site-sbruices.github.io%2FAUDP--ECM--Website-0b7285)](https://sbruices.github.io/AUDP-ECM-Website/)
-[![No JavaScript](https://img.shields.io/badge/JavaScript-none-success)](#security-posture)
+[![Security](https://img.shields.io/badge/CSP-strict%2C%20first--party%20only-success)](#security-posture)
 [![License](https://img.shields.io/badge/license-proprietary%20(ASPF)-lightgrey)](LICENSE)
 
 Public, **informational** website for AUDP-ECM:
@@ -16,7 +18,10 @@ It intentionally contains no secrets and no internal architecture of the private
 
 | Path | Purpose |
 |------|---------|
-| `site/` | everything that is published (static HTML/CSS, no build step) |
+| `site/` | everything that is published (static HTML/CSS/JS) |
+| `scripts/build_site.py` | generates every page (head, SEO, schema.org, header/footer) — CI fails on drift |
+| `site/assets/app.js` | progressive enhancement: theme toggle, mobile menu, copy buttons, reveal, live Reed–Solomon demo |
+| `scripts/test_demo.mjs` | tests the demo codec (known answers + 1 800 round trips) |
 | `site/.well-known/security.txt` | RFC 9116 security contact |
 | `scripts/content_guard.py` | pre-publish guard (see below) |
 | `.github/workflows/pages.yml` | CI (guard) and CD (GitHub Pages deploy from `main`) |
@@ -49,8 +54,10 @@ Deployment only happens after the guard passes.
 
 ## Security posture
 
-- Static files only; no JavaScript, no cookies, no third-party requests.
-- Strict CSP (`default-src 'none'`), `no-referrer`.
+- Static files plus one first-party script; no cookies, no third-party requests, no network calls from JS.
+- Strict CSP (`default-src 'none'; script-src 'self'`, no `unsafe-inline`/`unsafe-eval`).
+- The guard rejects `eval`, `Function`, `innerHTML`, `document.write`, `fetch`/XHR/WebSocket and external URLs in JS.
+- Everything works without JavaScript; the live demo is the only JS-only feature.
 - Deployed by GitHub Actions with least-privilege permissions to the `github-pages` environment.
 
 ## Local preview
