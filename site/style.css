@@ -286,3 +286,34 @@ button.sym:hover { transform: translateY(-2px); border-color: var(--accent); }
   .js .reveal { opacity: 1; transform: none; }
 }
 @media print { .js .reveal { opacity: 1 !important; transform: none !important; } .top, .demo-actions, .copy { display: none !important; } }
+
+/* demo: payload comparison + metrics */
+.demo-payloads { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 10px; margin: 14px 0; }
+.demo-payloads > div { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.demo-payloads .lbl { display: block; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+.demo-payloads code { display: block; background: none; padding: 0; word-break: break-all; font-size: 14px; }
+.demo-payloads code.damaged { color: var(--bad); }
+.demo-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(230px, 100%), 1fr)); gap: 10px; margin: 10px 0; }
+.demo-metrics > div { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--surface); }
+.demo-metrics dt { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.demo-metrics dd { margin: 4px 0 0; font-weight: 600; font-size: 14.5px; }
+.demo-metrics meter { width: 100%; height: 10px; margin-top: 6px; display: block; }
+.demo-metrics meter.over { outline: 2px solid var(--bad); border-radius: 6px; }
+
+/* documentation pages */
+.doc p, .doc li { max-width: 860px; }
+.formula { font: 600 16px/1.6 "Cambria Math", "STIX Two Math", Georgia, serif; background: var(--surface-2);
+           border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 10px 16px;
+           overflow-x: auto; max-width: 860px; }
+.steps { padding-left: 22px; }
+.steps li { margin: 8px 0; padding-left: 4px; }
+.steps li::marker { color: var(--accent); font-weight: 800; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.bench td { padding: 8px 14px; font-size: 14.5px; }
+details.bench-env { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); margin: 12px 0;
+                    box-shadow: var(--shadow); }
+details.bench-env > summary { cursor: pointer; padding: 14px 18px; list-style-position: inside; }
+details.bench-env[open] > summary { border-bottom: 1px solid var(--line); }
+details.bench-env .table-scroll { border: 0; border-radius: 0 0 var(--radius) var(--radius); box-shadow: none; }
+.tag { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; margin-left: 6px; }
+.tag.warn { background: var(--warn-bg); color: var(--warn); }

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Benchmarks — Reproducible Performance of AUDP-ECM v0.2.0</title>
+  <meta name="description" content="Reproducible latency, throughput and memory benchmarks of AUDP-ECM Python and D bindings on Linux, Windows and macOS, with the full method and raw data.">
+  <meta name="author" content="Sbruice Singh">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b7285">
+  <link rel="canonical" href="https://sbruices.github.io/AUDP-ECM-Website/benchmarks.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AUDP-ECM — Agriculture Service of Product Farm">
+  <meta property="og:title" content="Benchmarks — Reproducible Performance of AUDP-ECM v0.2.0">
+  <meta property="og:description" content="Reproducible latency, throughput and memory benchmarks of AUDP-ECM Python and D bindings on Linux, Windows and macOS, with the full method and raw data.">
+  <meta property="og:url" content="https://sbruices.github.io/AUDP-ECM-Website/benchmarks.html">
+  <meta property="og:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): reliable data from every field sensor">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Sbruice1">
+  <meta name="twitter:title" content="Benchmarks — Reproducible Performance of AUDP-ECM v0.2.0">
+  <meta name="twitter:description" content="Reproducible latency, throughput and memory benchmarks of AUDP-ECM Python and D bindings on Linux, Windows and macOS, with the full method and raw data.">
+  <meta name="twitter:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/app.js" defer></script>
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "inLanguage": "en",
+   "name": "AUDP-ECM — Agriculture Service of Product Farm (ASPF)",
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf",
+   "name": "Agriculture Service of Product Farm",
+   "alternateName": [
+    "ASPF",
+    "Agriculture Service of Product Farm (ASPF)"
+   ],
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/about.html",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/assets/icon-512.png",
+    "width": 512,
+    "height": 512
+   },
+   "image": [
+    "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+    "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   ],
+   "email": "sbruicesingh@haclon.in",
+   "description": "Agriculture Service of Product Farm (ASPF) is an agriculture research and innovation organisation building dependable data technology for farms: the AUDP device protocol family and the AUDP-ECM error-correction engine for agricultural sensors and telemetry.",
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "precision agriculture",
+    "agritech",
+    "agricultural sensors",
+    "farm telemetry",
+    "error-correcting codes",
+    "data reliability"
+   ],
+   "member": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "research collaboration and licensing",
+    "email": "sbruicesingh@haclon.in"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person",
+   "name": "Sbruice Singh",
+   "jobTitle": "Researcher",
+   "description": "Sbruice Singh is a researcher and the developer of AUDP-ECM at Agriculture Service of Product Farm (ASPF), working on dependable data for agricultural sensors and telemetry.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png",
+   "worksFor": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "affiliation": {
+    "@type": "Organization",
+    "name": "High Association Of Science & Technology (HACLON)",
+    "url": "https://www.haclon.in"
+   },
+   "sameAs": [
+    "https://github.com/SbruiceS",
+    "https://x.com/Sbruice1"
+   ],
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "error-correcting codes",
+    "Reed–Solomon codes",
+    "finite fields",
+    "agricultural telemetry",
+    "Rust",
+    "Python",
+    "D"
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#audp-ecm",
+   "name": "AUDP-ECM",
+   "alternateName": "AUDP Error Correction Mathematics Engine",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Linux, Windows, macOS",
+   "description": "Error-correction engine for agricultural sensors and telemetry: Reed–Solomon, BCH, CRC-16 and burst-resilient framing, with Python and D bindings.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "author": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "license": "https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/LICENSE",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+   "softwareVersion": "0.2.0",
+   "downloadUrl": "https://github.com/SbruiceS/AUDP-ECM-Python/releases"
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/benchmarks.html#webpage",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/benchmarks.html",
+   "name": "Benchmarks — Reproducible Performance of AUDP-ECM v0.2.0",
+   "description": "Reproducible latency, throughput and memory benchmarks of AUDP-ECM Python and D bindings on Linux, Windows and macOS, with the full method and raw data.",
+   "isPartOf": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website"
+   },
+   "inLanguage": "en",
+   "dateModified": "2026-10-20",
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   },
+   "breadcrumb": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/benchmarks.html#breadcrumb"
+   },
+   "about": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/benchmarks.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Benchmarks",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/benchmarks.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="index.html" aria-label="AUDP-ECM home">
+        <picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+      </a>
+      <div class="bar-actions">
+        <button id="theme-toggle" class="icon-btn needs-js" type="button" aria-label="Change theme">
+          <span class="i-sun" aria-hidden="true"></span><span class="i-moon" aria-hidden="true"></span>
+        </button>
+        <button id="nav-toggle" class="icon-btn menu needs-js" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="index.html#demo">Live demo</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="benchmarks.html" aria-current="page">Benchmarks</a>
+        <a href="security.html">Security</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="about.html">About ASPF</a>
+      </nav>
+    </div>
+  </header>
+
+    <nav class="wrap crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">›</span> <span>Benchmarks</span></nav>
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Reproducible performance</p>
+        <h1>Benchmarks</h1>
+        <p class="lead">Latency, throughput and memory of the released <strong>v0.2.0</strong> packages, measured on
+          GitHub-hosted runners with a published method. Anyone can rerun them.</p>
+      </div>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>Method</h2>
+      <ul class="checks">
+        <li><strong>What is measured:</strong> the public API, exactly as applications call it. Python uses the released wheels
+          (checksum-verified); D builds the release tag against the native library version it pins.</li>
+        <li><strong>Operations:</strong> encode; decode of a clean word; decode with exactly t errors; decode with n − k
+          erasures; burst framing of a 64-byte payload with one burst of depth·t bytes.</li>
+        <li><strong>Timing:</strong> warm-up, then 7 rounds, each a batch sized to about 50 ms. Reported: median and minimum
+          per call. A run is flagged <em>noisy</em> if any operation varies by more than 1.5× between rounds.</li>
+        <li><strong>Memory:</strong> Python heap allocated per call (including result objects) and process peak RSS
+          (which includes the Python interpreter); for D, garbage-collected bytes per call.</li>
+        <li><strong>Inputs:</strong> seeded (20261020), so every run measures identical data.</li>
+      </ul>
+      <p><strong>Reproduce:</strong> run the <em>Benchmarks</em> workflow in the
+        <a href="https://github.com/SbruiceS/AUDP-ECM-Python/actions/workflows/benchmarks.yml">Python</a> or <a href="https://github.com/SbruiceS/AUDP-ECM-D/actions/workflows/benchmarks.yml">D</a>
+        repository, or locally:</p>
+<pre><code>python benchmarks/bench.py            # Python, after pip install audp-ecm
+dub run :bench -b release             # D, with AUDP_ECM_LIB_DIR set</code></pre>
+      <p class="small">Shared CI runners and laptops vary, so compare numbers within one table rather than across machines.
+        Throughput counts payload bytes only.</p>
+    </section>
+
+    <section class="wrap doc reveal" id="python">
+      <h2>Python binding · v0.2.0</h2>
+      <details class="bench-env">
+        <summary><strong>linux-aarch64</strong><span class="small"> · Linux-7.0.0-1017-azure-aarch64-with-glibc2.39 · aarch64 · Python 3.12.15 · peak RSS 16,940 KiB</span></summary>
+        <div class="table-scroll"><table class="bench">
+        <thead><tr><th>Code</th><th>Operation</th><th class="num">Median µs</th><th class="num">Min µs</th><th class="num">MB/s</th><th class="num">Heap B/call</th></tr></thead>
+        <tbody>
+          <tr><td>RS(16,12)</td><td>encode</td><td class="num">0.43</td><td class="num">0.43</td><td class="num">27.7</td><td class="num">121</td></tr>
+          <tr><td>RS(16,12)</td><td>decode clean</td><td class="num">0.54</td><td class="num">0.54</td><td class="num">22.1</td><td class="num">181</td></tr>
+          <tr><td>RS(16,12)</td><td>decode t errors</td><td class="num">1.21</td><td class="num">1.20</td><td class="num">9.9</td><td class="num">181</td></tr>
+          <tr><td>RS(16,12)</td><td>decode full erasures</td><td class="num">1.65</td><td class="num">1.65</td><td class="num">7.3</td><td class="num">213</td></tr>
+          <tr><td>RS(32,24)</td><td>encode</td><td class="num">0.65</td><td class="num">0.65</td><td class="num">36.7</td><td class="num">137</td></tr>
+          <tr><td>RS(32,24)</td><td>decode clean</td><td class="num">0.92</td><td class="num">0.91</td><td class="num">26.2</td><td class="num">193</td></tr>
+          <tr><td>RS(32,24)</td><td>decode t errors</td><td class="num">2.27</td><td class="num">2.27</td><td class="num">10.6</td><td class="num">193</td></tr>
+          <tr><td>RS(32,24)</td><td>decode full erasures</td><td class="num">3.44</td><td class="num">3.44</td><td class="num">7.0</td><td class="num">257</td></tr>
+          <tr><td>RS(64,48)</td><td>encode</td><td class="num">1.32</td><td class="num">1.31</td><td class="num">36.4</td><td class="num">169</td></tr>
+          <tr><td>RS(64,48)</td><td>decode clean</td><td class="num">2.85</td><td class="num">2.84</td><td class="num">16.9</td><td class="num">217</td></tr>
+          <tr><td>RS(64,48)</td><td>decode t errors</td><td class="num">7.22</td><td class="num">7.21</td><td class="num">6.6</td><td class="num">217</td></tr>
+          <tr><td>RS(64,48)</td><td>decode full erasures</td><td class="num">10.72</td><td class="num">10.71</td><td class="num">4.5</td><td class="num">345</td></tr>
+          <tr><td>RS(128,96)</td><td>encode</td><td class="num">3.86</td><td class="num">3.85</td><td class="num">24.9</td><td class="num">233</td></tr>
+          <tr><td>RS(128,96)</td><td>decode clean</td><td class="num">10.88</td><td class="num">10.88</td><td class="num">8.8</td><td class="num">265</td></tr>
+          <tr><td>RS(128,96)</td><td>decode t errors</td><td class="num">28.14</td><td class="num">28.14</td><td class="num">3.4</td><td class="num">265</td></tr>
+          <tr><td>RS(128,96)</td><td>decode full erasures</td><td class="num">39.60</td><td class="num">39.57</td><td class="num">2.4</td><td class="num">521</td></tr>
+          <tr><td>RS(255,223)</td><td>encode</td><td class="num">8.59</td><td class="num">8.54</td><td class="num">25.9</td><td class="num">360</td></tr>
+          <tr><td>RS(255,223)</td><td>decode clean</td><td class="num">22.47</td><td class="num">22.46</td><td class="num">9.9</td><td class="num">392</td></tr>
+          <tr><td>RS(255,223)</td><td>decode t errors</td><td class="num">54.47</td><td class="num">54.46</td><td class="num">4.1</td><td class="num">392</td></tr>
+          <tr><td>RS(255,223)</td><td>decode full erasures</td><td class="num">69.93</td><td class="num">69.88</td><td class="num">3.2</td><td class="num">648</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst protect</td><td class="num">2.04</td><td class="num">2.04</td><td class="num">31.4</td><td class="num">229</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst recover max burst</td><td class="num">7.47</td><td class="num">7.46</td><td class="num">8.6</td><td class="num">169</td></tr>
+        </tbody>
+      </table></div>
+      </details>
+      <details class="bench-env" open>
+        <summary><strong>linux-x86_64</strong><span class="small"> · Linux-6.17.0-1022-azure-x86_64-with-glibc2.39 · AMD EPYC 7763 64-Core Processor · Python 3.12.15 · peak RSS 18,104 KiB</span></summary>
+        <div class="table-scroll"><table class="bench">
+        <thead><tr><th>Code</th><th>Operation</th><th class="num">Median µs</th><th class="num">Min µs</th><th class="num">MB/s</th><th class="num">Heap B/call</th></tr></thead>
+        <tbody>
+          <tr><td>RS(16,12)</td><td>encode</td><td class="num">0.50</td><td class="num">0.49</td><td class="num">24.2</td><td class="num">121</td></tr>
+          <tr><td>RS(16,12)</td><td>decode clean</td><td class="num">0.63</td><td class="num">0.63</td><td class="num">19.0</td><td class="num">181</td></tr>
+          <tr><td>RS(16,12)</td><td>decode t errors</td><td class="num">1.39</td><td class="num">1.38</td><td class="num">8.7</td><td class="num">181</td></tr>
+          <tr><td>RS(16,12)</td><td>decode full erasures</td><td class="num">1.96</td><td class="num">1.96</td><td class="num">6.1</td><td class="num">213</td></tr>
+          <tr><td>RS(32,24)</td><td>encode</td><td class="num">0.77</td><td class="num">0.77</td><td class="num">31.0</td><td class="num">137</td></tr>
+          <tr><td>RS(32,24)</td><td>decode clean</td><td class="num">1.14</td><td class="num">1.13</td><td class="num">21.0</td><td class="num">193</td></tr>
+          <tr><td>RS(32,24)</td><td>decode t errors</td><td class="num">2.74</td><td class="num">2.73</td><td class="num">8.8</td><td class="num">193</td></tr>
+          <tr><td>RS(32,24)</td><td>decode full erasures</td><td class="num">4.04</td><td class="num">4.02</td><td class="num">5.9</td><td class="num">257</td></tr>
+          <tr><td>RS(64,48)</td><td>encode</td><td class="num">1.60</td><td class="num">1.59</td><td class="num">30.1</td><td class="num">169</td></tr>
+          <tr><td>RS(64,48)</td><td>decode clean</td><td class="num">3.46</td><td class="num">3.46</td><td class="num">13.9</td><td class="num">217</td></tr>
+          <tr><td>RS(64,48)</td><td>decode t errors</td><td class="num">8.55</td><td class="num">8.54</td><td class="num">5.6</td><td class="num">217</td></tr>
+          <tr><td>RS(64,48)</td><td>decode full erasures</td><td class="num">12.57</td><td class="num">12.55</td><td class="num">3.8</td><td class="num">345</td></tr>
+          <tr><td>RS(128,96)</td><td>encode</td><td class="num">4.96</td><td class="num">4.94</td><td class="num">19.4</td><td class="num">233</td></tr>
+          <tr><td>RS(128,96)</td><td>decode clean</td><td class="num">13.52</td><td class="num">13.49</td><td class="num">7.1</td><td class="num">265</td></tr>
+          <tr><td>RS(128,96)</td><td>decode t errors</td><td class="num">34.51</td><td class="num">34.47</td><td class="num">2.8</td><td class="num">265</td></tr>
+          <tr><td>RS(128,96)</td><td>decode full erasures</td><td class="num">49.20</td><td class="num">49.08</td><td class="num">2.0</td><td class="num">521</td></tr>
+          <tr><td>RS(255,223)</td><td>encode</td><td class="num">11.11</td><td class="num">11.06</td><td class="num">20.1</td><td class="num">360</td></tr>
+          <tr><td>RS(255,223)</td><td>decode clean</td><td class="num">27.33</td><td class="num">27.31</td><td class="num">8.2</td><td class="num">392</td></tr>
+          <tr><td>RS(255,223)</td><td>decode t errors</td><td class="num">65.92</td><td class="num">65.81</td><td class="num">3.4</td><td class="num">392</td></tr>
+          <tr><td>RS(255,223)</td><td>decode full erasures</td><td class="num">86.60</td><td class="num">86.31</td><td class="num">2.6</td><td class="num">648</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst protect</td><td class="num">2.42</td><td class="num">2.41</td><td class="num">26.4</td><td class="num">229</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst recover max burst</td><td class="num">8.18</td><td class="num">8.17</td><td class="num">7.8</td><td class="num">169</td></tr>
+        </tbody>
+      </table></div>
+      </details>
+      <details class="bench-env">
+        <summary><strong>macos-arm64</strong> <span class="tag warn">noisy run</span><span class="small"> · macOS-26.6.2-arm64-arm-64bit · Apple M1 (Virtual) · Python 3.12.10 · peak RSS 22,128 KiB</span></summary>
+        <div class="table-scroll"><table class="bench">
+        <thead><tr><th>Code</th><th>Operation</th><th class="num">Median µs</th><th class="num">Min µs</th><th class="num">MB/s</th><th class="num">Heap B/call</th></tr></thead>
+        <tbody>
+          <tr><td>RS(16,12)</td><td>encode</td><td class="num">0.67</td><td class="num">0.54</td><td class="num">18.0</td><td class="num">121</td></tr>
+          <tr><td>RS(16,12)</td><td>decode clean</td><td class="num">0.78</td><td class="num">0.71</td><td class="num">15.4</td><td class="num">181</td></tr>
+          <tr><td>RS(16,12)</td><td>decode t errors</td><td class="num">1.91</td><td class="num">1.36</td><td class="num">6.3</td><td class="num">181</td></tr>
+          <tr><td>RS(16,12)</td><td>decode full erasures</td><td class="num">2.54</td><td class="num">1.82</td><td class="num">4.7</td><td class="num">213</td></tr>
+          <tr><td>RS(32,24)</td><td>encode</td><td class="num">0.94</td><td class="num">0.77</td><td class="num">25.6</td><td class="num">137</td></tr>
+          <tr><td>RS(32,24)</td><td>decode clean</td><td class="num">1.27</td><td class="num">1.10</td><td class="num">18.9</td><td class="num">193</td></tr>
+          <tr><td>RS(32,24)</td><td>decode t errors</td><td class="num">3.50</td><td class="num">2.97</td><td class="num">6.8</td><td class="num">193</td></tr>
+          <tr><td>RS(32,24)</td><td>decode full erasures</td><td class="num">4.64</td><td class="num">4.08</td><td class="num">5.2</td><td class="num">257</td></tr>
+          <tr><td>RS(64,48)</td><td>encode</td><td class="num">1.89</td><td class="num">1.59</td><td class="num">25.3</td><td class="num">169</td></tr>
+          <tr><td>RS(64,48)</td><td>decode clean</td><td class="num">4.12</td><td class="num">3.51</td><td class="num">11.6</td><td class="num">217</td></tr>
+          <tr><td>RS(64,48)</td><td>decode t errors</td><td class="num">11.38</td><td class="num">10.06</td><td class="num">4.2</td><td class="num">217</td></tr>
+          <tr><td>RS(64,48)</td><td>decode full erasures</td><td class="num">16.71</td><td class="num">14.49</td><td class="num">2.9</td><td class="num">345</td></tr>
+          <tr><td>RS(128,96)</td><td>encode</td><td class="num">5.12</td><td class="num">4.61</td><td class="num">18.8</td><td class="num">233</td></tr>
+          <tr><td>RS(128,96)</td><td>decode clean</td><td class="num">17.35</td><td class="num">16.53</td><td class="num">5.5</td><td class="num">265</td></tr>
+          <tr><td>RS(128,96)</td><td>decode t errors</td><td class="num">40.98</td><td class="num">37.05</td><td class="num">2.3</td><td class="num">265</td></tr>
+          <tr><td>RS(128,96)</td><td>decode full erasures</td><td class="num">57.01</td><td class="num">50.51</td><td class="num">1.7</td><td class="num">521</td></tr>
+          <tr><td>RS(255,223)</td><td>encode</td><td class="num">12.29</td><td class="num">10.12</td><td class="num">18.1</td><td class="num">360</td></tr>
+          <tr><td>RS(255,223)</td><td>decode clean</td><td class="num">32.78</td><td class="num">27.96</td><td class="num">6.8</td><td class="num">392</td></tr>
+          <tr><td>RS(255,223)</td><td>decode t errors</td><td class="num">80.19</td><td class="num">63.38</td><td class="num">2.8</td><td class="num">392</td></tr>
+          <tr><td>RS(255,223)</td><td>decode full erasures</td><td class="num">93.85</td><td class="num">86.08</td><td class="num">2.4</td><td class="num">648</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst protect</td><td class="num">2.30</td><td class="num">2.20</td><td class="num">27.8</td><td class="num">229</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst recover max burst</td><td class="num">11.12</td><td class="num">10.07</td><td class="num">5.8</td><td class="num">169</td></tr>
+        </tbody>
+      </table></div>
+      </details>
+      <details class="bench-env">
+        <summary><strong>windows-x64</strong><span class="small"> · Windows-2025Server-10.0.26100-SP0 · AMD EPYC 7763 64-Core Processor · Python 3.12.10 · peak RSS 23,516 KiB</span></summary>
+        <div class="table-scroll"><table class="bench">
+        <thead><tr><th>Code</th><th>Operation</th><th class="num">Median µs</th><th class="num">Min µs</th><th class="num">MB/s</th><th class="num">Heap B/call</th></tr></thead>
+        <tbody>
+          <tr><td>RS(16,12)</td><td>encode</td><td class="num">0.69</td><td class="num">0.69</td><td class="num">17.3</td><td class="num">113</td></tr>
+          <tr><td>RS(16,12)</td><td>decode clean</td><td class="num">0.73</td><td class="num">0.72</td><td class="num">16.5</td><td class="num">173</td></tr>
+          <tr><td>RS(16,12)</td><td>decode t errors</td><td class="num">2.19</td><td class="num">2.18</td><td class="num">5.5</td><td class="num">173</td></tr>
+          <tr><td>RS(16,12)</td><td>decode full erasures</td><td class="num">2.53</td><td class="num">2.51</td><td class="num">4.7</td><td class="num">205</td></tr>
+          <tr><td>RS(32,24)</td><td>encode</td><td class="num">0.96</td><td class="num">0.96</td><td class="num">25.0</td><td class="num">129</td></tr>
+          <tr><td>RS(32,24)</td><td>decode clean</td><td class="num">1.23</td><td class="num">1.22</td><td class="num">19.5</td><td class="num">185</td></tr>
+          <tr><td>RS(32,24)</td><td>decode t errors</td><td class="num">3.92</td><td class="num">3.90</td><td class="num">6.1</td><td class="num">185</td></tr>
+          <tr><td>RS(32,24)</td><td>decode full erasures</td><td class="num">4.98</td><td class="num">4.96</td><td class="num">4.8</td><td class="num">249</td></tr>
+          <tr><td>RS(64,48)</td><td>encode</td><td class="num">1.91</td><td class="num">1.90</td><td class="num">25.1</td><td class="num">161</td></tr>
+          <tr><td>RS(64,48)</td><td>decode clean</td><td class="num">3.65</td><td class="num">3.59</td><td class="num">13.1</td><td class="num">209</td></tr>
+          <tr><td>RS(64,48)</td><td>decode t errors</td><td class="num">10.55</td><td class="num">10.49</td><td class="num">4.6</td><td class="num">209</td></tr>
+          <tr><td>RS(64,48)</td><td>decode full erasures</td><td class="num">14.20</td><td class="num">14.15</td><td class="num">3.4</td><td class="num">337</td></tr>
+          <tr><td>RS(128,96)</td><td>encode</td><td class="num">4.99</td><td class="num">4.97</td><td class="num">19.2</td><td class="num">225</td></tr>
+          <tr><td>RS(128,96)</td><td>decode clean</td><td class="num">13.70</td><td class="num">13.66</td><td class="num">7.0</td><td class="num">257</td></tr>
+          <tr><td>RS(128,96)</td><td>decode t errors</td><td class="num">37.91</td><td class="num">37.77</td><td class="num">2.5</td><td class="num">257</td></tr>
+          <tr><td>RS(128,96)</td><td>decode full erasures</td><td class="num">51.96</td><td class="num">51.61</td><td class="num">1.8</td><td class="num">513</td></tr>
+          <tr><td>RS(255,223)</td><td>encode</td><td class="num">10.91</td><td class="num">10.89</td><td class="num">20.4</td><td class="num">352</td></tr>
+          <tr><td>RS(255,223)</td><td>decode clean</td><td class="num">27.58</td><td class="num">27.52</td><td class="num">8.1</td><td class="num">384</td></tr>
+          <tr><td>RS(255,223)</td><td>decode t errors</td><td class="num">69.55</td><td class="num">69.34</td><td class="num">3.2</td><td class="num">384</td></tr>
+          <tr><td>RS(255,223)</td><td>decode full erasures</td><td class="num">90.12</td><td class="num">89.64</td><td class="num">2.5</td><td class="num">640</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst protect</td><td class="num">3.12</td><td class="num">3.12</td><td class="num">20.5</td><td class="num">221</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst recover max burst</td><td class="num">13.37</td><td class="num">13.33</td><td class="num">4.8</td><td class="num">161</td></tr>
+        </tbody>
+      </table></div>
+      </details>
+      <p class="small">Raw JSON and logs: <a href="https://github.com/SbruiceS/AUDP-ECM-Python/actions/runs/39431127875">CI run</a> · data committed in the website repository under <code>data/benchmarks/v0.2.0/python/</code>.</p>
+    </section>
+    <section class="wrap doc reveal" id="d">
+      <h2>D binding · v0.2.0</h2>
+      <details class="bench-env" open>
+        <summary><strong>linux-x86_64-ldc</strong><span class="small"> · linux · AMD EPYC 9V45 96-Core Processor · LDC 2113</span></summary>
+        <div class="table-scroll"><table class="bench">
+        <thead><tr><th>Code</th><th>Operation</th><th class="num">Median µs</th><th class="num">Min µs</th><th class="num">MB/s</th><th class="num">GC B/call</th></tr></thead>
+        <tbody>
+          <tr><td>RS(16,12)</td><td>encode</td><td class="num">0.19</td><td class="num">0.19</td><td class="num">61.6</td><td class="num">32</td></tr>
+          <tr><td>RS(16,12)</td><td>decode clean</td><td class="num">0.14</td><td class="num">0.14</td><td class="num">85.2</td><td class="num">16</td></tr>
+          <tr><td>RS(16,12)</td><td>decode t errors</td><td class="num">0.62</td><td class="num">0.62</td><td class="num">19.2</td><td class="num">16</td></tr>
+          <tr><td>RS(16,12)</td><td>decode full erasures</td><td class="num">0.60</td><td class="num">0.59</td><td class="num">20.0</td><td class="num">16</td></tr>
+          <tr><td>RS(32,24)</td><td>encode</td><td class="num">0.35</td><td class="num">0.35</td><td class="num">68.7</td><td class="num">48</td></tr>
+          <tr><td>RS(32,24)</td><td>decode clean</td><td class="num">0.46</td><td class="num">0.45</td><td class="num">52.6</td><td class="num">32</td></tr>
+          <tr><td>RS(32,24)</td><td>decode t errors</td><td class="num">1.48</td><td class="num">1.47</td><td class="num">16.2</td><td class="num">32</td></tr>
+          <tr><td>RS(32,24)</td><td>decode full erasures</td><td class="num">1.68</td><td class="num">1.67</td><td class="num">14.3</td><td class="num">32</td></tr>
+          <tr><td>RS(64,48)</td><td>encode</td><td class="num">0.83</td><td class="num">0.83</td><td class="num">57.6</td><td class="num">96</td></tr>
+          <tr><td>RS(64,48)</td><td>decode clean</td><td class="num">2.13</td><td class="num">2.07</td><td class="num">22.5</td><td class="num">64</td></tr>
+          <tr><td>RS(64,48)</td><td>decode t errors</td><td class="num">5.49</td><td class="num">5.46</td><td class="num">8.7</td><td class="num">64</td></tr>
+          <tr><td>RS(64,48)</td><td>decode full erasures</td><td class="num">6.95</td><td class="num">6.84</td><td class="num">6.9</td><td class="num">64</td></tr>
+          <tr><td>RS(128,96)</td><td>encode</td><td class="num">2.72</td><td class="num">2.71</td><td class="num">35.3</td><td class="num">176</td></tr>
+          <tr><td>RS(128,96)</td><td>decode clean</td><td class="num">9.23</td><td class="num">9.17</td><td class="num">10.4</td><td class="num">128</td></tr>
+          <tr><td>RS(128,96)</td><td>decode t errors</td><td class="num">23.14</td><td class="num">23.10</td><td class="num">4.1</td><td class="num">128</td></tr>
+          <tr><td>RS(128,96)</td><td>decode full erasures</td><td class="num">30.08</td><td class="num">29.98</td><td class="num">3.2</td><td class="num">128</td></tr>
+          <tr><td>RS(255,223)</td><td>encode</td><td class="num">6.26</td><td class="num">6.23</td><td class="num">35.6</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode clean</td><td class="num">19.37</td><td class="num">19.28</td><td class="num">11.5</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode t errors</td><td class="num">46.34</td><td class="num">46.11</td><td class="num">4.8</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode full erasures</td><td class="num">56.46</td><td class="num">56.05</td><td class="num">3.9</td><td class="num">256</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst protect</td><td class="num">1.37</td><td class="num">1.36</td><td class="num">46.8</td><td class="num">128</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst recover max burst</td><td class="num">5.57</td><td class="num">5.55</td><td class="num">11.5</td><td class="num">96</td></tr>
+        </tbody>
+      </table></div>
+      </details>
+      <details class="bench-env">
+        <summary><strong>macos-arm64-ldc</strong> <span class="tag warn">noisy run</span><span class="small"> · macos · unknown · LDC 2113</span></summary>
+        <div class="table-scroll"><table class="bench">
+        <thead><tr><th>Code</th><th>Operation</th><th class="num">Median µs</th><th class="num">Min µs</th><th class="num">MB/s</th><th class="num">GC B/call</th></tr></thead>
+        <tbody>
+          <tr><td>RS(16,12)</td><td>encode</td><td class="num">0.40</td><td class="num">0.35</td><td class="num">30.3</td><td class="num">32</td></tr>
+          <tr><td>RS(16,12)</td><td>decode clean</td><td class="num">0.24</td><td class="num">0.19</td><td class="num">50.3</td><td class="num">16</td></tr>
+          <tr><td>RS(16,12)</td><td>decode t errors</td><td class="num">1.21</td><td class="num">1.03</td><td class="num">9.9</td><td class="num">16</td></tr>
+          <tr><td>RS(16,12)</td><td>decode full erasures</td><td class="num">1.04</td><td class="num">0.98</td><td class="num">11.5</td><td class="num">16</td></tr>
+          <tr><td>RS(32,24)</td><td>encode</td><td class="num">0.57</td><td class="num">0.54</td><td class="num">42.3</td><td class="num">48</td></tr>
+          <tr><td>RS(32,24)</td><td>decode clean</td><td class="num">0.64</td><td class="num">0.59</td><td class="num">37.8</td><td class="num">32</td></tr>
+          <tr><td>RS(32,24)</td><td>decode t errors</td><td class="num">2.32</td><td class="num">2.08</td><td class="num">10.3</td><td class="num">32</td></tr>
+          <tr><td>RS(32,24)</td><td>decode full erasures</td><td class="num">2.67</td><td class="num">2.24</td><td class="num">9.0</td><td class="num">32</td></tr>
+          <tr><td>RS(64,48)</td><td>encode</td><td class="num">1.58</td><td class="num">1.22</td><td class="num">30.4</td><td class="num">96</td></tr>
+          <tr><td>RS(64,48)</td><td>decode clean</td><td class="num">3.14</td><td class="num">2.58</td><td class="num">15.3</td><td class="num">64</td></tr>
+          <tr><td>RS(64,48)</td><td>decode t errors</td><td class="num">7.77</td><td class="num">7.17</td><td class="num">6.2</td><td class="num">64</td></tr>
+          <tr><td>RS(64,48)</td><td>decode full erasures</td><td class="num">9.82</td><td class="num">8.84</td><td class="num">4.9</td><td class="num">64</td></tr>
+          <tr><td>RS(128,96)</td><td>encode</td><td class="num">4.24</td><td class="num">4.12</td><td class="num">22.6</td><td class="num">176</td></tr>
+          <tr><td>RS(128,96)</td><td>decode clean</td><td class="num">12.13</td><td class="num">11.95</td><td class="num">7.9</td><td class="num">128</td></tr>
+          <tr><td>RS(128,96)</td><td>decode t errors</td><td class="num">31.12</td><td class="num">30.92</td><td class="num">3.1</td><td class="num">128</td></tr>
+          <tr><td>RS(128,96)</td><td>decode full erasures</td><td class="num">39.78</td><td class="num">39.60</td><td class="num">2.4</td><td class="num">128</td></tr>
+          <tr><td>RS(255,223)</td><td>encode</td><td class="num">13.02</td><td class="num">9.87</td><td class="num">17.1</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode clean</td><td class="num">26.49</td><td class="num">25.61</td><td class="num">8.4</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode t errors</td><td class="num">68.07</td><td class="num">64.19</td><td class="num">3.3</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode full erasures</td><td class="num">94.96</td><td class="num">90.83</td><td class="num">2.3</td><td class="num">256</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst protect</td><td class="num">2.92</td><td class="num">2.46</td><td class="num">21.9</td><td class="num">128</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst recover max burst</td><td class="num">8.40</td><td class="num">8.01</td><td class="num">7.6</td><td class="num">96</td></tr>
+        </tbody>
+      </table></div>
+      </details>
+      <details class="bench-env">
+        <summary><strong>windows-x64-ldc</strong><span class="small"> · windows · unknown · LDC 2113</span></summary>
+        <div class="table-scroll"><table class="bench">
+        <thead><tr><th>Code</th><th>Operation</th><th class="num">Median µs</th><th class="num">Min µs</th><th class="num">MB/s</th><th class="num">GC B/call</th></tr></thead>
+        <tbody>
+          <tr><td>RS(16,12)</td><td>encode</td><td class="num">0.52</td><td class="num">0.52</td><td class="num">22.9</td><td class="num">32</td></tr>
+          <tr><td>RS(16,12)</td><td>decode clean</td><td class="num">0.31</td><td class="num">0.31</td><td class="num">38.6</td><td class="num">16</td></tr>
+          <tr><td>RS(16,12)</td><td>decode t errors</td><td class="num">1.73</td><td class="num">1.72</td><td class="num">6.9</td><td class="num">16</td></tr>
+          <tr><td>RS(16,12)</td><td>decode full erasures</td><td class="num">1.55</td><td class="num">1.54</td><td class="num">7.7</td><td class="num">16</td></tr>
+          <tr><td>RS(32,24)</td><td>encode</td><td class="num">0.84</td><td class="num">0.83</td><td class="num">28.6</td><td class="num">48</td></tr>
+          <tr><td>RS(32,24)</td><td>decode clean</td><td class="num">0.80</td><td class="num">0.79</td><td class="num">30.1</td><td class="num">32</td></tr>
+          <tr><td>RS(32,24)</td><td>decode t errors</td><td class="num">3.43</td><td class="num">3.42</td><td class="num">7.0</td><td class="num">32</td></tr>
+          <tr><td>RS(32,24)</td><td>decode full erasures</td><td class="num">3.64</td><td class="num">3.62</td><td class="num">6.6</td><td class="num">32</td></tr>
+          <tr><td>RS(64,48)</td><td>encode</td><td class="num">2.05</td><td class="num">2.03</td><td class="num">23.4</td><td class="num">96</td></tr>
+          <tr><td>RS(64,48)</td><td>decode clean</td><td class="num">3.13</td><td class="num">3.12</td><td class="num">15.3</td><td class="num">64</td></tr>
+          <tr><td>RS(64,48)</td><td>decode t errors</td><td class="num">10.20</td><td class="num">10.17</td><td class="num">4.7</td><td class="num">64</td></tr>
+          <tr><td>RS(64,48)</td><td>decode full erasures</td><td class="num">12.31</td><td class="num">12.22</td><td class="num">3.9</td><td class="num">64</td></tr>
+          <tr><td>RS(128,96)</td><td>encode</td><td class="num">6.74</td><td class="num">6.70</td><td class="num">14.2</td><td class="num">176</td></tr>
+          <tr><td>RS(128,96)</td><td>decode clean</td><td class="num">13.55</td><td class="num">13.40</td><td class="num">7.1</td><td class="num">128</td></tr>
+          <tr><td>RS(128,96)</td><td>decode t errors</td><td class="num">38.29</td><td class="num">38.16</td><td class="num">2.5</td><td class="num">128</td></tr>
+          <tr><td>RS(128,96)</td><td>decode full erasures</td><td class="num">48.90</td><td class="num">48.79</td><td class="num">2.0</td><td class="num">128</td></tr>
+          <tr><td>RS(255,223)</td><td>encode</td><td class="num">14.94</td><td class="num">14.80</td><td class="num">14.9</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode clean</td><td class="num">27.21</td><td class="num">27.06</td><td class="num">8.2</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode t errors</td><td class="num">70.41</td><td class="num">70.10</td><td class="num">3.2</td><td class="num">256</td></tr>
+          <tr><td>RS(255,223)</td><td>decode full erasures</td><td class="num">86.85</td><td class="num">86.66</td><td class="num">2.6</td><td class="num">256</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst protect</td><td class="num">3.39</td><td class="num">3.36</td><td class="num">18.9</td><td class="num">128</td></tr>
+          <tr><td>BurstCodec(31,23,depth=4)</td><td>burst recover max burst</td><td class="num">13.34</td><td class="num">13.24</td><td class="num">4.8</td><td class="num">96</td></tr>
+        </tbody>
+      </table></div>
+      </details>
+      <p class="small">Raw JSON and logs: <a href="https://github.com/SbruiceS/AUDP-ECM-D/actions/runs/39431134450">CI run</a> · data committed in the website repository under <code>data/benchmarks/v0.2.0/d/</code>.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p class="foot-logo"><picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture></p>
+      <p><a href="about.html">Agriculture Service of Product Farm (ASPF)</a> ·
+        <a href="research.html">Agriculture research &amp; innovation</a> ·
+        <a href="sbruice-singh.html">Sbruice Singh</a></p>
+      <p><a href="how-it-works.html">How it works</a> · <a href="benchmarks.html">Benchmarks</a> ·
+        <a href="security.html">Security model</a> · <a href="evidence.html">Documentation &amp; evidence</a></p>
+      <p>© 2026 Sbruice Singh · Agriculture Service of Product Farm (ASPF). All rights reserved.</p>
+      <p class="small">AUDP-ECM is proprietary software of ASPF and is not open source. Any use requires a
+        written licence agreement with ASPF — licensing and research enquiries:
+        <a href="mailto:sbruicesingh@haclon.in">sbruicesingh@haclon.in</a>.</p>
+      <p class="small">This site is informational. It sets no cookies and loads no third-party resources.</p>
+    </div>
+  </footer>
+</body>
+</html>

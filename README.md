@@ -21,6 +21,8 @@ It intentionally contains no secrets and no internal architecture of the private
 | `site/` | everything that is published (static HTML/CSS/JS) |
 | `scripts/build_site.py` | generates every page (head, SEO, schema.org, header/footer) — CI fails on drift |
 | `site/assets/app.js` | progressive enhancement: theme toggle, mobile menu, copy buttons, reveal, live Reed–Solomon demo |
+| `scripts/site_pages.py` | documentation pages (maths, security, evidence, benchmarks) |
+| `data/benchmarks/<version>/` | raw benchmark JSON from the binding repos' CI workflows |
 | `scripts/test_demo.mjs` | tests the demo codec (known answers + 1 800 round trips) |
 | `site/.well-known/security.txt` | RFC 9116 security contact |
 | `scripts/content_guard.py` | pre-publish guard (see below) |
@@ -34,6 +36,10 @@ It intentionally contains no secrets and no internal architecture of the private
 | `about.html` | Agriculture Service of Product Farm (ASPF) |
 | `research.html` | agriculture research and innovation |
 | `sbruice-singh.html` | Sbruice Singh |
+| `how-it-works.html` | Reed–Solomon mathematics, conventions, correction limits |
+| `benchmarks.html` | AUDP-ECM performance (rendered from `data/benchmarks/`) |
+| `security.html` | error correction vs security |
+| `evidence.html` | API docs, testing, platforms, releases |
 
 Every page carries a canonical URL, Open Graph / Twitter card metadata and a schema.org
 JSON-LD graph (`Organization`, `Person`, `WebSite`, `SoftwareApplication`, breadcrumbs).

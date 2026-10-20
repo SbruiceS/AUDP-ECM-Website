@@ -261,7 +261,16 @@ function initDemo() {
   const tOut = document.getElementById("demo-t");
   const grid = document.getElementById("demo-grid");
   const status = document.getElementById("demo-status");
-  const decodedOut = document.getElementById("demo-decoded");
+  const out = {
+    orig: document.getElementById("demo-orig"),
+    recv: document.getElementById("demo-recv"),
+    recovered: document.getElementById("demo-recovered"),
+    detected: document.getElementById("m-detected"),
+    injected: document.getElementById("m-injected"),
+    meter: document.getElementById("m-meter"),
+    positions: document.getElementById("m-positions"),
+    time: document.getElementById("m-time"),
+  };
   const enc = new TextEncoder();
   const dec = new TextDecoder("utf-8", { fatal: false });
 
@@ -285,6 +294,31 @@ function initDemo() {
     rx = clean.slice();
     render();
   }
+
+  /**
+   * Median per-call decode time (µs) over 5 loops of about 6 ms each. The
+   * iteration cap keeps the loop finite even where timers are clamped or
+   * virtualised (privacy-hardened browsers, headless renderers).
+   */
+  function timeDecode() {
+    const samples = [];
+    for (let rep = 0; rep < 5; rep++) {
+      let calls = 0;
+      const t0 = performance.now();
+      let t1 = t0;
+      while (t1 - t0 < 6 && calls < 5000) {
+        RS.decode(rx, r);
+        calls++;
+        t1 = performance.now();
+      }
+      if (t1 > t0) samples.push(((t1 - t0) * 1000) / calls);
+    }
+    if (!samples.length) return NaN;
+    samples.sort((a, b) => a - b);
+    return samples[Math.floor(samples.length / 2)];
+  }
+
+  const text = (bytes) => dec.decode(Uint8Array.from(bytes));
 
   function render() {
     const result = RS.decode(rx, r);
@@ -311,27 +345,54 @@ function initDemo() {
     });
 
     const nBad = corrupted.filter(Boolean).length;
+    const nBadData = corrupted.slice(r).filter(Boolean).length;
     const t = r / 2;
+    const detected = RS.syndromes(rx, r).some((v) => v !== 0);
+
+    out.orig.textContent = text(data);
+    out.recv.textContent = text(rx.slice(r));
+    out.recv.classList.toggle("damaged", nBadData > 0);
+    out.detected.textContent = detected ? "yes: syndromes are non-zero" : "no: the word is a valid codeword";
+    out.injected.textContent =
+      `${nBad} corrupted symbol${nBad === 1 ? "" : "s"} (${nBadData} data, ${nBad - nBadData} parity), capacity t = ${t}`;
+    out.meter.max = Math.max(t, 1);
+    out.meter.value = Math.min(nBad, t);
+    out.meter.classList.toggle("over", nBad > t);
+    const us = timeDecode();
+    out.time.textContent = Number.isFinite(us)
+      ? `${us.toFixed(1)} µs per decode (JavaScript, this browser)`
+      : "not measurable (timer resolution is restricted in this browser)";
+
     status.className = "demo-status";
     if (nBad === 0) {
+      out.positions.textContent = "none needed";
+      out.recovered.textContent = text(data);
       status.textContent = `Clean frame: ${rx.length} symbols (${data.length} data + ${r} parity). Click symbols or add noise.`;
-      decodedOut.textContent = dec.decode(data);
       return;
     }
     if (result.ok) {
+      out.positions.textContent = result.positions.length ? result.positions.join(", ") : "none";
+      out.recovered.textContent = text(result.data);
       const exact = result.data.every((v, i) => v === data[i]);
       if (exact) {
         status.classList.add("good");
-        status.textContent = `Repaired ${result.positions.length} corrupted symbol${result.positions.length === 1 ? "" : "s"} (capacity t = ${t}). Payload recovered exactly.`;
+        status.textContent =
+          `Repaired ${result.positions.length} of at most ${t} correctable symbols. ` +
+          "The recovered payload is byte-for-byte identical to the original.";
       } else {
         status.classList.add("warn");
-        status.textContent = `${nBad} errors exceed t = ${t}: the decoder converged to a different valid codeword (miscorrection). A CRC on top catches this — AUDP-ECM framing adds one.`;
+        status.textContent =
+          `${nBad} errors exceed the capacity t = ${t}. The damaged word happened to lie within ${t} symbols ` +
+          "of a different valid codeword, so the decoder produced the wrong payload (miscorrection). " +
+          "AUDP-ECM burst framing adds a CRC-16 on top to detect exactly this case.";
       }
-      decodedOut.textContent = dec.decode(Uint8Array.from(result.data));
     } else {
+      out.positions.textContent = "none: frame rejected";
+      out.recovered.textContent = "(rejected)";
       status.classList.add("bad");
-      status.textContent = `${nBad} errors exceed t = ${t}: frame rejected (${result.reason}). Detected, never silently accepted.`;
-      decodedOut.textContent = "— rejected —";
+      status.textContent =
+        `${nBad} errors exceed the capacity t = ${t}. No codeword lies within ${t} symbols of what was received, ` +
+        `so the decoder refuses (${result.reason}) instead of guessing. The failure is detected and reported, never silently accepted.`;
     }
   }
 
