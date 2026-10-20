@@ -64,8 +64,9 @@ SOFTWARE = {
     "downloadUrl": "https://github.com/SbruiceS/AUDP-ECM-Python/releases",
 }
 
-NAV = [("index.html", "Home"), ("index.html#demo", "Live demo"), ("about.html", "About ASPF"),
-       ("research.html", "Research &amp; Innovation"), ("sbruice-singh.html", "Sbruice Singh")]
+NAV = [("index.html", "Home"), ("index.html#demo", "Live demo"), ("how-it-works.html", "How it works"),
+       ("benchmarks.html", "Benchmarks"), ("security.html", "Security"), ("evidence.html", "Evidence"),
+       ("about.html", "About ASPF")]
 
 LOGO = """<picture class="logo-light">
           <source srcset="assets/logo-640.webp" type="image/webp">
@@ -172,6 +173,8 @@ def page(fname, title, description, h1_label, page_type, body, crumbs, main_enti
       <p><a href="about.html">Agriculture Service of Product Farm (ASPF)</a> ·
         <a href="research.html">Agriculture research &amp; innovation</a> ·
         <a href="sbruice-singh.html">Sbruice Singh</a></p>
+      <p><a href="how-it-works.html">How it works</a> · <a href="benchmarks.html">Benchmarks</a> ·
+        <a href="security.html">Security model</a> · <a href="evidence.html">Documentation &amp; evidence</a></p>
       <p>© 2026 Sbruice Singh · Agriculture Service of Product Farm (ASPF). All rights reserved.</p>
       <p class="small">AUDP-ECM is proprietary software of ASPF and is not open source. Any use requires a
         written licence agreement with ASPF — licensing and research enquiries:
@@ -250,8 +253,22 @@ page("index.html",
         <p class="legend"><span class="sym parity">pp</span> parity <span class="sym data">dd</span> data
           <span class="sym bad">xx</span> corrupted <span class="sym bad fixed">ok</span> repaired — click any symbol to toggle damage</p>
         <div id="demo-grid" class="demo-grid" aria-label="Transmitted symbols (hex)"></div>
+        <div class="demo-payloads">
+          <div><span class="lbl">1 · Original payload</span><code id="demo-orig"></code></div>
+          <div><span class="lbl">2 · Received (before decoding)</span><code id="demo-recv"></code></div>
+          <div><span class="lbl">3 · Recovered payload</span><code id="demo-recovered"></code></div>
+        </div>
+        <dl class="demo-metrics">
+          <div><dt>Errors detected</dt><dd id="m-detected"></dd></div>
+          <div><dt>Damage vs capacity</dt><dd><span id="m-injected"></span>
+            <meter id="m-meter" min="0" max="4" value="0" aria-label="Corrupted symbols relative to correction capacity"></meter></dd></div>
+          <div><dt>Corrected positions</dt><dd id="m-positions"></dd></div>
+          <div><dt>Decoding time</dt><dd id="m-time"></dd></div>
+        </dl>
         <p id="demo-status" class="demo-status" role="status" aria-live="polite"></p>
-        <p class="demo-out">Decoded payload: <code id="demo-decoded"></code></p>
+        <p class="small">Timing is the JavaScript demo in your browser. Native library performance is published on the
+          <a href="benchmarks.html">benchmarks</a> page. What happens beyond capacity is explained under
+          <a href="how-it-works.html#limits">correction limits</a>.</p>
       </div>
     </section>
 
@@ -492,6 +509,11 @@ page("sbruice-singh.html",
       </ul>
     </section>""", [("index.html", "Home"), ("sbruice-singh.html", "Sbruice Singh")],
      main_entity=PERSON_ID, og_type="profile")
+
+# ---------------------------------------------------------------------------- documentation pages
+from site_pages import register  # noqa: E402  (scripts/ is on sys.path when run as a script)
+
+register(page, BASE)
 
 # ---------------------------------------------------------------------------- 404 (absolute paths: served at any depth)
 P = "/AUDP-ECM-Website/"

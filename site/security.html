@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Security Model — Error Correction Is Not Security | AUDP-ECM</title>
+  <meta name="description" content="What AUDP-ECM error correction protects against and what it does not, why a CRC is not a MAC, and how to layer encryption and authentication correctly.">
+  <meta name="author" content="Sbruice Singh">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b7285">
+  <link rel="canonical" href="https://sbruices.github.io/AUDP-ECM-Website/security.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AUDP-ECM — Agriculture Service of Product Farm">
+  <meta property="og:title" content="Security Model — Error Correction Is Not Security | AUDP-ECM">
+  <meta property="og:description" content="What AUDP-ECM error correction protects against and what it does not, why a CRC is not a MAC, and how to layer encryption and authentication correctly.">
+  <meta property="og:url" content="https://sbruices.github.io/AUDP-ECM-Website/security.html">
+  <meta property="og:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): reliable data from every field sensor">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Sbruice1">
+  <meta name="twitter:title" content="Security Model — Error Correction Is Not Security | AUDP-ECM">
+  <meta name="twitter:description" content="What AUDP-ECM error correction protects against and what it does not, why a CRC is not a MAC, and how to layer encryption and authentication correctly.">
+  <meta name="twitter:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/app.js" defer></script>
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "inLanguage": "en",
+   "name": "AUDP-ECM — Agriculture Service of Product Farm (ASPF)",
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf",
+   "name": "Agriculture Service of Product Farm",
+   "alternateName": [
+    "ASPF",
+    "Agriculture Service of Product Farm (ASPF)"
+   ],
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/about.html",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/assets/icon-512.png",
+    "width": 512,
+    "height": 512
+   },
+   "image": [
+    "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+    "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   ],
+   "email": "sbruicesingh@haclon.in",
+   "description": "Agriculture Service of Product Farm (ASPF) is an agriculture research and innovation organisation building dependable data technology for farms: the AUDP device protocol family and the AUDP-ECM error-correction engine for agricultural sensors and telemetry.",
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "precision agriculture",
+    "agritech",
+    "agricultural sensors",
+    "farm telemetry",
+    "error-correcting codes",
+    "data reliability"
+   ],
+   "member": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "research collaboration and licensing",
+    "email": "sbruicesingh@haclon.in"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person",
+   "name": "Sbruice Singh",
+   "jobTitle": "Researcher",
+   "description": "Sbruice Singh is a researcher and the developer of AUDP-ECM at Agriculture Service of Product Farm (ASPF), working on dependable data for agricultural sensors and telemetry.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png",
+   "worksFor": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "affiliation": {
+    "@type": "Organization",
+    "name": "High Association Of Science & Technology (HACLON)",
+    "url": "https://www.haclon.in"
+   },
+   "sameAs": [
+    "https://github.com/SbruiceS",
+    "https://x.com/Sbruice1"
+   ],
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "error-correcting codes",
+    "Reed–Solomon codes",
+    "finite fields",
+    "agricultural telemetry",
+    "Rust",
+    "Python",
+    "D"
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#audp-ecm",
+   "name": "AUDP-ECM",
+   "alternateName": "AUDP Error Correction Mathematics Engine",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Linux, Windows, macOS",
+   "description": "Error-correction engine for agricultural sensors and telemetry: Reed–Solomon, BCH, CRC-16 and burst-resilient framing, with Python and D bindings.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "author": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "license": "https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/LICENSE",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+   "softwareVersion": "0.2.0",
+   "downloadUrl": "https://github.com/SbruiceS/AUDP-ECM-Python/releases"
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/security.html#webpage",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/security.html",
+   "name": "Security Model — Error Correction Is Not Security | AUDP-ECM",
+   "description": "What AUDP-ECM error correction protects against and what it does not, why a CRC is not a MAC, and how to layer encryption and authentication correctly.",
+   "isPartOf": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website"
+   },
+   "inLanguage": "en",
+   "dateModified": "2026-10-20",
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   },
+   "breadcrumb": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/security.html#breadcrumb"
+   },
+   "about": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/security.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Security model",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/security.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="index.html" aria-label="AUDP-ECM home">
+        <picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+      </a>
+      <div class="bar-actions">
+        <button id="theme-toggle" class="icon-btn needs-js" type="button" aria-label="Change theme">
+          <span class="i-sun" aria-hidden="true"></span><span class="i-moon" aria-hidden="true"></span>
+        </button>
+        <button id="nav-toggle" class="icon-btn menu needs-js" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="index.html#demo">Live demo</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="benchmarks.html">Benchmarks</a>
+        <a href="security.html" aria-current="page">Security</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="about.html">About ASPF</a>
+      </nav>
+    </div>
+  </header>
+
+    <nav class="wrap crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">›</span> <span>Security model</span></nav>
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Security model</p>
+        <h1>Error correction is not security</h1>
+        <p class="lead">AUDP-ECM protects data against <strong>accidental</strong> damage: noise, interference, fading
+          and dropped bytes. It does not protect against a <strong>deliberate</strong> attacker. Both matter, and they need
+          different tools.</p>
+      </div>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>What it does and does not protect against</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Threat</th><th>AUDP-ECM</th><th>What you need</th></tr></thead>
+        <tbody>
+          <tr><td>Random noise, interference, fading</td><td>✔ corrected up to capacity, detected beyond it</td><td>—</td></tr>
+          <tr><td>Bursts of lost or garbled bytes</td><td>✔ corrected up to depth·t with burst framing</td><td>—</td></tr>
+          <tr><td>Deliberate modification of a frame</td><td>✘ an attacker can craft valid codewords and CRCs</td><td>MAC (e.g. HMAC-SHA-256) or AEAD</td></tr>
+          <tr><td>Forged frames from an impostor</td><td>✘</td><td>Authentication: MAC/AEAD with per-device keys, or signatures</td></tr>
+          <tr><td>Replay of old frames</td><td>✘</td><td>Sequence numbers or nonces inside the authenticated data</td></tr>
+          <tr><td>Eavesdropping</td><td>✘</td><td>Encryption: AEAD such as AES-GCM or ChaCha20-Poly1305</td></tr>
+          <tr><td>Jamming / denial of service</td><td>partial: tolerates noise up to capacity</td><td>Physical-layer and network measures</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note"><strong>A CRC is not a MAC.</strong> CRC-16 and Reed–Solomon parity are public, linear functions. Anyone can
+        recompute them after changing the data, so a matching CRC proves only the absence of <em>accidental</em> errors.</p>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>Recommended layering</h2>
+      <ol class="steps">
+        <li><strong>Sender:</strong> encrypt and authenticate the payload with an AEAD (or append a MAC). Include a sequence number.</li>
+        <li><strong>Then</strong> protect the authenticated bytes with AUDP-ECM (error correction is the outermost layer on the link).</li>
+        <li><strong>Receiver:</strong> decode with AUDP-ECM first. If that fails, drop the frame or request a retransmission.</li>
+        <li><strong>Then</strong> verify and decrypt with the AEAD. Reject the frame if authentication fails, or if the sequence number repeats.</li>
+      </ol>
+      <p>This order lets error correction repair channel damage before the authentication check, which would otherwise
+        reject every frame with a single flipped bit.</p>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>How the library itself is hardened</h2>
+      <ul class="checks">
+        <li>Memory-safe implementation. The bindings forbid unsafe code (Python) or expose only <code>@safe</code> APIs (D).</li>
+        <li>Every input is validated, and failures raise typed errors. Malformed input never crashes or corrupts memory.</li>
+        <li>Decoded data is verified before it is returned. Burst frames add a CRC-16 as a second check.</li>
+        <li>Bounded resource use: input sizes, interleave depth and erasure lists are capped.</li>
+        <li>Fuzzing, property-based tests and memory-safety checking in continuous integration. Dependencies are audited.</li>
+        <li>Release artifacts carry SHA-256 checksums and signed build-provenance attestations.</li>
+      </ul>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>Reporting a vulnerability</h2>
+      <p>Use GitHub's <em>Report a vulnerability</em> button on the affected repository, or email
+        <a href="mailto:sbruicesingh@haclon.in">sbruicesingh@haclon.in</a>. Please do not open a public issue.
+        See <a href=".well-known/security.txt">security.txt</a>.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p class="foot-logo"><picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture></p>
+      <p><a href="about.html">Agriculture Service of Product Farm (ASPF)</a> ·
+        <a href="research.html">Agriculture research &amp; innovation</a> ·
+        <a href="sbruice-singh.html">Sbruice Singh</a></p>
+      <p><a href="how-it-works.html">How it works</a> · <a href="benchmarks.html">Benchmarks</a> ·
+        <a href="security.html">Security model</a> · <a href="evidence.html">Documentation &amp; evidence</a></p>
+      <p>© 2026 Sbruice Singh · Agriculture Service of Product Farm (ASPF). All rights reserved.</p>
+      <p class="small">AUDP-ECM is proprietary software of ASPF and is not open source. Any use requires a
+        written licence agreement with ASPF — licensing and research enquiries:
+        <a href="mailto:sbruicesingh@haclon.in">sbruicesingh@haclon.in</a>.</p>
+      <p class="small">This site is informational. It sets no cookies and loads no third-party resources.</p>
+    </div>
+  </footer>
+</body>
+</html>

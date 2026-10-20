@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Documentation & Evidence — APIs, Testing, Platforms | AUDP-ECM</title>
+  <meta name="description" content="AUDP-ECM API documentation, test methodology, continuous-integration matrix, supported platforms and verifiable versioned releases for the Python and D bindings.">
+  <meta name="author" content="Sbruice Singh">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b7285">
+  <link rel="canonical" href="https://sbruices.github.io/AUDP-ECM-Website/evidence.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AUDP-ECM — Agriculture Service of Product Farm">
+  <meta property="og:title" content="Documentation & Evidence — APIs, Testing, Platforms | AUDP-ECM">
+  <meta property="og:description" content="AUDP-ECM API documentation, test methodology, continuous-integration matrix, supported platforms and verifiable versioned releases for the Python and D bindings.">
+  <meta property="og:url" content="https://sbruices.github.io/AUDP-ECM-Website/evidence.html">
+  <meta property="og:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): reliable data from every field sensor">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Sbruice1">
+  <meta name="twitter:title" content="Documentation & Evidence — APIs, Testing, Platforms | AUDP-ECM">
+  <meta name="twitter:description" content="AUDP-ECM API documentation, test methodology, continuous-integration matrix, supported platforms and verifiable versioned releases for the Python and D bindings.">
+  <meta name="twitter:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/app.js" defer></script>
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "inLanguage": "en",
+   "name": "AUDP-ECM — Agriculture Service of Product Farm (ASPF)",
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf",
+   "name": "Agriculture Service of Product Farm",
+   "alternateName": [
+    "ASPF",
+    "Agriculture Service of Product Farm (ASPF)"
+   ],
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/about.html",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/assets/icon-512.png",
+    "width": 512,
+    "height": 512
+   },
+   "image": [
+    "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+    "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   ],
+   "email": "sbruicesingh@haclon.in",
+   "description": "Agriculture Service of Product Farm (ASPF) is an agriculture research and innovation organisation building dependable data technology for farms: the AUDP device protocol family and the AUDP-ECM error-correction engine for agricultural sensors and telemetry.",
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "precision agriculture",
+    "agritech",
+    "agricultural sensors",
+    "farm telemetry",
+    "error-correcting codes",
+    "data reliability"
+   ],
+   "member": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "research collaboration and licensing",
+    "email": "sbruicesingh@haclon.in"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person",
+   "name": "Sbruice Singh",
+   "jobTitle": "Researcher",
+   "description": "Sbruice Singh is a researcher and the developer of AUDP-ECM at Agriculture Service of Product Farm (ASPF), working on dependable data for agricultural sensors and telemetry.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png",
+   "worksFor": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "affiliation": {
+    "@type": "Organization",
+    "name": "High Association Of Science & Technology (HACLON)",
+    "url": "https://www.haclon.in"
+   },
+   "sameAs": [
+    "https://github.com/SbruiceS",
+    "https://x.com/Sbruice1"
+   ],
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "error-correcting codes",
+    "Reed–Solomon codes",
+    "finite fields",
+    "agricultural telemetry",
+    "Rust",
+    "Python",
+    "D"
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#audp-ecm",
+   "name": "AUDP-ECM",
+   "alternateName": "AUDP Error Correction Mathematics Engine",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Linux, Windows, macOS",
+   "description": "Error-correction engine for agricultural sensors and telemetry: Reed–Solomon, BCH, CRC-16 and burst-resilient framing, with Python and D bindings.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "author": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "license": "https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/LICENSE",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+   "softwareVersion": "0.2.0",
+   "downloadUrl": "https://github.com/SbruiceS/AUDP-ECM-Python/releases"
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/evidence.html#webpage",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/evidence.html",
+   "name": "Documentation & Evidence — APIs, Testing, Platforms | AUDP-ECM",
+   "description": "AUDP-ECM API documentation, test methodology, continuous-integration matrix, supported platforms and verifiable versioned releases for the Python and D bindings.",
+   "isPartOf": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website"
+   },
+   "inLanguage": "en",
+   "dateModified": "2026-10-20",
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   },
+   "breadcrumb": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/evidence.html#breadcrumb"
+   },
+   "about": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/evidence.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Evidence",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/evidence.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="index.html" aria-label="AUDP-ECM home">
+        <picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+      </a>
+      <div class="bar-actions">
+        <button id="theme-toggle" class="icon-btn needs-js" type="button" aria-label="Change theme">
+          <span class="i-sun" aria-hidden="true"></span><span class="i-moon" aria-hidden="true"></span>
+        </button>
+        <button id="nav-toggle" class="icon-btn menu needs-js" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="index.html#demo">Live demo</a>
+        <a href="how-it-works.html">How it works</a>
+        <a href="benchmarks.html">Benchmarks</a>
+        <a href="security.html">Security</a>
+        <a href="evidence.html" aria-current="page">Evidence</a>
+        <a href="about.html">About ASPF</a>
+      </nav>
+    </div>
+  </header>
+
+    <nav class="wrap crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">›</span> <span>Evidence</span></nav>
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Documentation &amp; evidence</p>
+        <h1>API docs, testing, platforms and releases</h1>
+        <p class="lead">Everything needed to evaluate AUDP-ECM: reference documentation, how it is tested,
+          where it runs, and verifiable release artifacts.</p>
+      </div>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>API documentation</h2>
+      <div class="grid two">
+        <div class="card"><h3>Python</h3><p>Classes, functions, errors and limits.</p>
+          <p><a href="https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/docs/api.md">API reference</a> · <a href="https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/docs/security.md">security model</a> ·
+          <a href="https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/docs/development.md">building &amp; CI</a> · <a href="https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/docs/releasing.md">releases</a></p></div>
+        <div class="card"><h3>D</h3><p>The <code>@safe</code> API, exceptions and linking on each platform.</p>
+          <p><a href="https://github.com/SbruiceS/AUDP-ECM-D/blob/main/docs/api.md">API reference</a> · <a href="https://github.com/SbruiceS/AUDP-ECM-D/blob/main/docs/security.md">security model</a> ·
+          <a href="https://github.com/SbruiceS/AUDP-ECM-D/blob/main/docs/building.md">building &amp; linking</a> · <a href="https://github.com/SbruiceS/AUDP-ECM-D/blob/main/docs/releasing.md">releases</a></p></div>
+      </div>
+      <p>Mathematical conventions and guarantees: <a href="how-it-works.html">how it works</a>.</p>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>Test methodology</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Kind</th><th>What it establishes</th><th>Where</th></tr></thead>
+        <tbody>
+          <tr><td>Known-answer vectors</td><td>Field arithmetic, generator, codewords and CRC match the published values</td><td>core, Python, D, browser</td></tr>
+          <tr><td>Exhaustive small cases</td><td>Every single-symbol error in RS(7,3), corrected by both decoders</td><td>core</td></tr>
+          <tr><td>Errata budget sweep</td><td>Every combination 2e + s ≤ n − k decodes exactly</td><td>core, Python, D</td></tr>
+          <tr><td>Property-based tests</td><td>Random messages, error patterns and bursts within capacity always recover</td><td>core, Python (Hypothesis)</td></tr>
+          <tr><td>Differential tests</td><td>Two independent decoders agree; table arithmetic equals a reference; language bindings equal the native library</td><td>core, browser (300 cross-checks)</td></tr>
+          <tr><td>Adversarial and fuzz testing</td><td>Garbage input, wrong lengths and bad indices produce errors, never crashes</td><td>core (coverage-guided fuzzing), Python, D</td></tr>
+          <tr><td>Soundness of verification</td><td>Any successful decode returns a valid codeword within the claimed distance</td><td>core</td></tr>
+          <tr><td>Memory-safety checking</td><td>The native boundary is checked under an undefined-behaviour interpreter</td><td>core CI</td></tr>
+          <tr><td>Concurrency</td><td>Shared decoder objects are safe across threads</td><td>Python, D</td></tr>
+          <tr><td>Release-artifact tests</td><td>Each built wheel is installed and tested before it is released</td><td>Python CD</td></tr>
+        </tbody>
+      </table></div>
+      <p>Continuous integration runs on every change: Python on Linux, Windows and macOS with Python 3.10, 3.12 and 3.13;
+        D with DMD and LDC on Linux, Windows and macOS. Changes reach the main branch only through reviewed pull requests
+        whose required checks pass.</p>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>Supported platforms</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Binding</th><th>Platforms</th><th>Requirements</th></tr></thead>
+        <tbody>
+          <tr><td>Python</td><td>Linux x86_64 and aarch64 (manylinux2014), Windows x64, macOS universal2 (Intel and Apple Silicon)</td><td>CPython ≥ 3.10 (one abi3 wheel per platform); no runtime dependencies</td></tr>
+          <tr><td>D</td><td>Linux, Windows (DMD, LDC); macOS (LDC)</td><td>DMD ≥ 2.105 or LDC ≥ 1.35; native library ABI ≥ 2</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="wrap doc reveal">
+      <h2>Releases</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Package</th><th>Version</th><th>Artifacts</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>audp-ecm (Python)</td><td><a href="https://github.com/SbruiceS/AUDP-ECM-Python/releases/tag/v0.2.0">v0.2.0</a></td><td>4 wheels, SHA256SUMS, build provenance</td><td>Every wheel is tested after install before release</td></tr>
+          <tr><td>audp-ecm (D)</td><td><a href="https://github.com/SbruiceS/AUDP-ECM-D/releases/tag/v0.2.0">v0.2.0</a></td><td>source archive, C header, SHA256SUMS, build provenance</td><td>Full test matrix before release</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>Verify a download:</strong></p>
+<pre><code>sha256sum -c SHA256SUMS
+gh attestation verify &lt;file&gt; --repo SbruiceS/AUDP-ECM-Python   # or AUDP-ECM-D</code></pre>
+      <p>Release tags are immutable, and the main branches are protected: changes land only through pull requests
+        whose required checks pass. AUDP-ECM is proprietary software of ASPF; use requires a written licence agreement.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p class="foot-logo"><picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture></p>
+      <p><a href="about.html">Agriculture Service of Product Farm (ASPF)</a> ·
+        <a href="research.html">Agriculture research &amp; innovation</a> ·
+        <a href="sbruice-singh.html">Sbruice Singh</a></p>
+      <p><a href="how-it-works.html">How it works</a> · <a href="benchmarks.html">Benchmarks</a> ·
+        <a href="security.html">Security model</a> · <a href="evidence.html">Documentation &amp; evidence</a></p>
+      <p>© 2026 Sbruice Singh · Agriculture Service of Product Farm (ASPF). All rights reserved.</p>
+      <p class="small">AUDP-ECM is proprietary software of ASPF and is not open source. Any use requires a
+        written licence agreement with ASPF — licensing and research enquiries:
+        <a href="mailto:sbruicesingh@haclon.in">sbruicesingh@haclon.in</a>.</p>
+      <p class="small">This site is informational. It sets no cookies and loads no third-party resources.</p>
+    </div>
+  </footer>
+</body>
+</html>

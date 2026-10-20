@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>How AUDP-ECM Works — Reed–Solomon Mathematics & Limits</title>
+  <meta name="description" content="The finite-field conventions, generator polynomial, decoding algorithms, correction limits and burst-framing assumptions behind AUDP-ECM error correction.">
+  <meta name="author" content="Sbruice Singh">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="theme-color" content="#0b7285">
+  <link rel="canonical" href="https://sbruices.github.io/AUDP-ECM-Website/how-it-works.html">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="assets/icon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="sitemap" type="application/xml" href="sitemap.xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="AUDP-ECM — Agriculture Service of Product Farm">
+  <meta property="og:title" content="How AUDP-ECM Works — Reed–Solomon Mathematics & Limits">
+  <meta property="og:description" content="The finite-field conventions, generator polynomial, decoding algorithms, correction limits and burst-framing assumptions behind AUDP-ECM error correction.">
+  <meta property="og:url" content="https://sbruices.github.io/AUDP-ECM-Website/how-it-works.html">
+  <meta property="og:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="AUDP-ECM by Agriculture Service of Product Farm (ASPF): reliable data from every field sensor">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@Sbruice1">
+  <meta name="twitter:title" content="How AUDP-ECM Works — Reed–Solomon Mathematics & Limits">
+  <meta name="twitter:description" content="The finite-field conventions, generator polynomial, decoding algorithms, correction limits and burst-framing assumptions behind AUDP-ECM error correction.">
+  <meta name="twitter:image" content="https://sbruices.github.io/AUDP-ECM-Website/og-image.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="assets/app.js" defer></script>
+  <script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "WebSite",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "inLanguage": "en",
+   "name": "AUDP-ECM — Agriculture Service of Product Farm (ASPF)",
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf",
+   "name": "Agriculture Service of Product Farm",
+   "alternateName": [
+    "ASPF",
+    "Agriculture Service of Product Farm (ASPF)"
+   ],
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/about.html",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/assets/icon-512.png",
+    "width": 512,
+    "height": 512
+   },
+   "image": [
+    "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+    "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   ],
+   "email": "sbruicesingh@haclon.in",
+   "description": "Agriculture Service of Product Farm (ASPF) is an agriculture research and innovation organisation building dependable data technology for farms: the AUDP device protocol family and the AUDP-ECM error-correction engine for agricultural sensors and telemetry.",
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "precision agriculture",
+    "agritech",
+    "agricultural sensors",
+    "farm telemetry",
+    "error-correcting codes",
+    "data reliability"
+   ],
+   "member": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "research collaboration and licensing",
+    "email": "sbruicesingh@haclon.in"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person",
+   "name": "Sbruice Singh",
+   "jobTitle": "Researcher",
+   "description": "Sbruice Singh is a researcher and the developer of AUDP-ECM at Agriculture Service of Product Farm (ASPF), working on dependable data for agricultural sensors and telemetry.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png",
+   "worksFor": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "affiliation": {
+    "@type": "Organization",
+    "name": "High Association Of Science & Technology (HACLON)",
+    "url": "https://www.haclon.in"
+   },
+   "sameAs": [
+    "https://github.com/SbruiceS",
+    "https://x.com/Sbruice1"
+   ],
+   "knowsAbout": [
+    "agriculture research",
+    "agricultural innovation",
+    "error-correcting codes",
+    "Reed–Solomon codes",
+    "finite fields",
+    "agricultural telemetry",
+    "Rust",
+    "Python",
+    "D"
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/#audp-ecm",
+   "name": "AUDP-ECM",
+   "alternateName": "AUDP Error Correction Mathematics Engine",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Linux, Windows, macOS",
+   "description": "Error-correction engine for agricultural sensors and telemetry: Reed–Solomon, BCH, CRC-16 and burst-resilient framing, with Python and D bindings.",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/",
+   "author": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/sbruice-singh.html#person"
+   },
+   "publisher": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   },
+   "license": "https://github.com/SbruiceS/AUDP-ECM-Python/blob/main/LICENSE",
+   "image": "https://sbruices.github.io/AUDP-ECM-Website/assets/logo-1200.png",
+   "softwareVersion": "0.2.0",
+   "downloadUrl": "https://github.com/SbruiceS/AUDP-ECM-Python/releases"
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/how-it-works.html#webpage",
+   "url": "https://sbruices.github.io/AUDP-ECM-Website/how-it-works.html",
+   "name": "How AUDP-ECM Works — Reed–Solomon Mathematics & Limits",
+   "description": "The finite-field conventions, generator polynomial, decoding algorithms, correction limits and burst-framing assumptions behind AUDP-ECM error correction.",
+   "isPartOf": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#website"
+   },
+   "inLanguage": "en",
+   "dateModified": "2026-10-20",
+   "primaryImageOfPage": {
+    "@type": "ImageObject",
+    "url": "https://sbruices.github.io/AUDP-ECM-Website/og-image.png"
+   },
+   "breadcrumb": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/how-it-works.html#breadcrumb"
+   },
+   "about": {
+    "@id": "https://sbruices.github.io/AUDP-ECM-Website/#aspf"
+   }
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://sbruices.github.io/AUDP-ECM-Website/how-it-works.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "How it works",
+     "item": "https://sbruices.github.io/AUDP-ECM-Website/how-it-works.html"
+    }
+   ]
+  }
+ ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="wrap bar">
+      <a class="brand" href="index.html" aria-label="AUDP-ECM home">
+        <picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="brand-logo">
+        </picture>
+      </a>
+      <div class="bar-actions">
+        <button id="theme-toggle" class="icon-btn needs-js" type="button" aria-label="Change theme">
+          <span class="i-sun" aria-hidden="true"></span><span class="i-moon" aria-hidden="true"></span>
+        </button>
+        <button id="nav-toggle" class="icon-btn menu needs-js" type="button" aria-controls="site-nav" aria-expanded="false" aria-label="Menu">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <nav id="site-nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="index.html#demo">Live demo</a>
+        <a href="how-it-works.html" aria-current="page">How it works</a>
+        <a href="benchmarks.html">Benchmarks</a>
+        <a href="security.html">Security</a>
+        <a href="evidence.html">Evidence</a>
+        <a href="about.html">About ASPF</a>
+      </nav>
+    </div>
+  </header>
+
+    <nav class="wrap crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a> <span aria-hidden="true">›</span> <span>How it works</span></nav>
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Mathematics &amp; conventions</p>
+        <h1>How AUDP-ECM works</h1>
+        <p class="lead">The exact finite-field conventions, code construction, decoding guarantees and framing
+          rules, so results can be verified independently and implementations can interoperate.</p>
+      </div>
+    </section>
+
+    <section class="wrap doc reveal" id="field">
+      <h2>1 · The finite field GF(2<sup>8</sup>)</h2>
+      <ul class="checks">
+        <li>Symbols are bytes, interpreted as elements of GF(2<sup>8</sup>) = GF(2)[x] / p(x) with the primitive
+          polynomial <strong>p(x) = x<sup>8</sup> + x<sup>4</sup> + x<sup>3</sup> + x<sup>2</sup> + 1</strong> (0x11D).</li>
+        <li>Bit <em>i</em> of a byte is the coefficient of x<sup><em>i</em></sup>. The primitive element is
+          <strong>α = x</strong> (byte 0x02); every non-zero element is α<sup><em>e</em></sup> for a unique 0 ≤ e ≤ 254.</li>
+        <li>Addition is bitwise XOR. Multiplication is polynomial multiplication reduced modulo p(x),
+          for example 0x53 · 0xCA = 0x8F and 0x80 · 0x02 = 0x1D.</li>
+      </ul>
+    </section>
+
+    <section class="wrap doc reveal" id="codes">
+      <h2>2 · Reed–Solomon code parameters</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Symbol</th><th>Meaning</th><th>Constraint</th></tr></thead>
+        <tbody>
+          <tr><td><em>n</em></td><td>codeword length in bytes</td><td>2 ≤ n ≤ 255</td></tr>
+          <tr><td><em>k</em></td><td>data bytes per codeword</td><td>1 ≤ k &lt; n</td></tr>
+          <tr><td><em>r</em> = n − k</td><td>parity bytes</td><td>—</td></tr>
+          <tr><td><em>t</em> = ⌊r / 2⌋</td><td>unknown symbol errors always corrected</td><td>—</td></tr>
+          <tr><td><em>d</em> = n − k + 1</td><td>minimum distance (maximum distance separable)</td><td>meets the Singleton bound</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="wrap doc reveal" id="encoding">
+      <h2>3 · Generator polynomial and systematic encoding</h2>
+      <p>The generator has the <em>r</em> consecutive roots α<sup>1</sup> … α<sup>r</sup> (first consecutive root b = 1):</p>
+      <p class="formula">g(x) = (x − α)(x − α<sup>2</sup>) ··· (x − α<sup>r</sup>), &nbsp; deg g = r, monic.</p>
+      <p>For data bytes m<sub>0</sub> … m<sub>k−1</sub>, with m(x) = Σ m<sub>j</sub> x<sup>j</sup>, the codeword is</p>
+      <p class="formula">c(x) = x<sup>r</sup>·m(x) + p(x), &nbsp;&nbsp; p(x) = x<sup>r</sup>·m(x) mod g(x).</p>
+      <p><strong>Byte layout:</strong> byte <em>j</em> of the transmitted codeword is the coefficient of x<sup>j</sup>.
+        The r parity bytes come first (j &lt; r), followed by the k data bytes unchanged. Every codeword satisfies
+        c(α<sup>i</sup>) = 0 for i = 1 … r.</p>
+    </section>
+
+    <section class="wrap doc reveal" id="decoding">
+      <h2>4 · Decoding</h2>
+      <ol class="steps">
+        <li><strong>Syndromes</strong> S<sub>i</sub> = y(α<sup>i</sup>), i = 1 … r, of the received word y. All zero ⇔ y is a codeword,
+          so no correction is needed.</li>
+        <li><strong>Error locator</strong> Λ(x) from the key equation S(x)·Λ(x) ≡ Ω(x) (mod x<sup>r</sup>), solved by the
+          <em>Berlekamp–Massey</em> algorithm. An independent <em>Euclidean-algorithm</em> decoder solves the same equation and is
+          cross-checked against it in testing.</li>
+        <li><strong>Erasures</strong> (known-bad positions) enter as the erasure locator Γ(x) = Π (1 − α<sup>j</sup>x) through
+          modified (Forney) syndromes. The combined errata locator is Λ<sub>e</sub>(x)·Γ(x).</li>
+        <li><strong>Chien search:</strong> error positions are the j with Λ(α<sup>−j</sup>) = 0. The number of roots must equal deg Λ.</li>
+        <li><strong>Forney's formula</strong> gives each error value: e<sub>j</sub> = Ω(α<sup>−j</sup>) / Λ′(α<sup>−j</sup>).</li>
+        <li><strong>Verification:</strong> a result is returned only if the corrected word is a valid codeword. Otherwise
+          decoding fails with an explicit error.</li>
+      </ol>
+      <p class="note"><strong>Guarantee.</strong> With <em>e</em> unknown errors and <em>s</em> erasures, decoding is unique and
+        correct whenever <strong>2e + s ≤ n − k</strong>. An erasure costs one parity byte; an unknown error costs two.</p>
+    </section>
+
+    <section class="wrap doc reveal" id="limits">
+      <h2>5 · Correction limits: what happens beyond capacity</h2>
+      <p>When 2e + s &gt; n − k, no decoder can guarantee the original data. Exactly one of three things happens:</p>
+      <div class="grid three">
+        <div class="card"><h3>Rejected (most common)</h3><p>No codeword lies close enough to the received word. Decoding fails
+          with an explicit error, so the frame is <strong>detected as bad</strong> and never silently accepted.</p></div>
+        <div class="card"><h3>Miscorrected (rare)</h3><p>The damage moved the word within <em>t</em> symbols of a
+          <em>different</em> valid codeword, which the decoder then returns. This is a fundamental property of every
+          error-correcting code, not an implementation bug.</p></div>
+        <div class="card"><h3>Caught by CRC</h3><p>Burst framing adds a CRC-16 over the payload. A miscorrection must also pass that
+          16-bit check, so wrong payloads are rejected except with probability about 2<sup>−16</sup>.</p></div>
+      </div>
+      <p><strong>Measured:</strong> across 1,800 test frames with exactly <em>t</em> + 1 errors, using codes with 2–32 parity bytes,
+        98.4 % were rejected and 1.6 % miscorrected before any CRC. Miscorrection becomes rarer as the parity count grows.
+        You can reproduce both outcomes in the <a href="index.html#demo">live demo</a> by corrupting more than <em>t</em> symbols.</p>
+      <p><strong>Erasure caveat:</strong> each marked erasure consumes budget. Marking too many positions as unreliable
+        can turn a correctable frame into an uncorrectable one, so marking is bounded to n − k.</p>
+    </section>
+
+    <section class="wrap doc reveal" id="burst">
+      <h2>6 · Burst-resilient framing and its assumptions</h2>
+      <p class="formula">frame = len (u16, big-endian) ‖ payload ‖ CRC-16(len ‖ payload), zero-padded to depth·k bytes</p>
+      <p>The frame is split into <em>depth</em> consecutive k-byte blocks, each encoded as one RS(n, k) codeword. Byte j of codeword i
+        is transmitted at position <strong>j·depth + i</strong>. A contiguous burst of L bytes therefore touches at most
+        ⌈L / depth⌉ bytes of any one codeword, so <strong>every burst of up to depth·t bytes is corrected</strong>.</p>
+      <p>Recovery returns the exact payload (its length is part of the frame) after the CRC matches. The guarantees assume:</p>
+      <ul class="checks">
+        <li><strong>Symbol synchronisation:</strong> the receiver gets exactly n·depth bytes in order. Insertions, deletions
+          and bit slips are not corrected and must be handled by the link layer.</li>
+        <li><strong>Per-codeword budget:</strong> the rule is that every codeword individually satisfies 2e + s ≤ n − k.
+          A single burst of ≤ depth·t bytes always meets it; several bursts in one frame may not.</li>
+        <li><strong>Erasure positions</strong>, when supplied, index the transmitted stream. They are mapped to codewords automatically.</li>
+        <li><strong>Payload size</strong> ≤ depth·k − 4 bytes and ≤ 65,535 bytes. The receiver buffers n·depth bytes,
+          which adds latency equal to one full frame.</li>
+      </ul>
+    </section>
+
+    <section class="wrap doc reveal" id="crc">
+      <h2>7 · CRC-16 parameters</h2>
+      <p>CRC-16/CCITT-FALSE: polynomial 0x1021, initial value 0xFFFF, no input or output reflection, no final XOR.
+        It is appended big-endian. Check value: CRC("123456789") = <strong>0x29B1</strong>. A CRC detects accidental errors;
+        it does not authenticate data (see <a href="security.html">security model</a>).</p>
+    </section>
+
+    <section class="wrap doc reveal" id="vectors">
+      <h2>8 · Test vectors</h2>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Item</th><th>Input</th><th>Expected</th></tr></thead>
+        <tbody>
+          <tr><td>GF(2<sup>8</sup>) multiply</td><td>0x53 · 0xCA · 0xFF·0xFF · 0x80·0x02</td><td>0x8F · 0xE2 · 0x1D</td></tr>
+          <tr><td>Generator, r = 4</td><td>g(x) low → high</td><td><code>74 E7 D8 1E 01</code></td></tr>
+          <tr><td>RS(7,3) codeword</td><td>data <code>01 02 03</code></td><td><code>17 3A 51 52 01 02 03</code></td></tr>
+          <tr><td>RS(15,11) parity</td><td>data <code>01 02 … 0B</code></td><td><code>08 11 65 70</code></td></tr>
+          <tr><td>CRC-16/CCITT-FALSE</td><td>ASCII "123456789"</td><td><code>0x29B1</code></td></tr>
+        </tbody>
+      </table></div>
+      <p>These vectors are checked in the Python, D and in-browser test suites. The in-browser codec is byte-identical to the
+        library on 300 randomised cross-checks.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap">
+      <p class="foot-logo"><picture class="logo-light">
+          <source srcset="assets/logo-640.webp" type="image/webp">
+          <img src="assets/logo-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture>
+        <picture class="logo-dark">
+          <source srcset="assets/logo-dark-640.webp" type="image/webp">
+          <img src="assets/logo-dark-640.png" alt="AUDP-ECM logo" width="640" height="92" class="foot-brand">
+        </picture></p>
+      <p><a href="about.html">Agriculture Service of Product Farm (ASPF)</a> ·
+        <a href="research.html">Agriculture research &amp; innovation</a> ·
+        <a href="sbruice-singh.html">Sbruice Singh</a></p>
+      <p><a href="how-it-works.html">How it works</a> · <a href="benchmarks.html">Benchmarks</a> ·
+        <a href="security.html">Security model</a> · <a href="evidence.html">Documentation &amp; evidence</a></p>
+      <p>© 2026 Sbruice Singh · Agriculture Service of Product Farm (ASPF). All rights reserved.</p>
+      <p class="small">AUDP-ECM is proprietary software of ASPF and is not open source. Any use requires a
+        written licence agreement with ASPF — licensing and research enquiries:
+        <a href="mailto:sbruicesingh@haclon.in">sbruicesingh@haclon.in</a>.</p>
+      <p class="small">This site is informational. It sets no cookies and loads no third-party resources.</p>
+    </div>
+  </footer>
+</body>
+</html>
